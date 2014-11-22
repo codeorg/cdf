@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/lib/ng/angular.min.js"></script>
+    <script src="/lib/ng/angular-resource.min.js"></script>
+    <link rel="stylesheet" href="/lib/bs/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <form ng-app="app" name='codeorgForm' ng-controller="AddUserController"  novalidate  >
+
+        <div class="form-group"
+             ng-class='{ "has-error" : codeorgForm.text1.$invalid && (codeorgForm.text1.$dirty || isPost)}'>
+            <label>Text</label>
+            <input type="text" name="text1" class="form-control" ng-model="datatable.text1" required ng-pattern="/^[A-Za-z0-9]+$/">
+            <p ng-show="codeorgForm.text1.$error.required && (codeorgForm.text1.$dirty || isPost)" class="help-block">您输入的不能为空</p>
+            <p ng-show="codeorgForm.text1.$error.pattern && (codeorgForm.text1.$dirty || isPost)" class="help-block">必须是：A-Za-z0-9</p>
+        </div>
+        <script>
+
+            var  appM =angular.module('app', [ ]);
+            appM.controller("AddUserController", [ '$scope' ,function($scope) {
+                $scope.isPost=false;
+
+            } ]);
+        </script>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="lib/ng/angular.min.js?v=2"></script>
+    <script src="lib/ng/angular-resource.min.js?v=2"></script>
+
+</head>
+<body>
+<div ng-app="HelloApp" ng-controller="divController">
+    {{user}}
+    <br>
+    {{obj2}}
+</div>
+
+<script>
+    var module = angular.module( 'my.resource', [ 'ngResource' ] );
+
+    module.factory( 'Resource', [ '$resource', function( $resource ) {
+        return function( url, params, methods ) {
+            var defaults = {
+                update221: { method: 'put', isArray: false },
+                create: { method: 'post' }
+            };
+
+            methods = angular.extend( defaults, methods );
+
+            var resource = $resource( url, params, methods );
+
+            resource.$save = function() {
+
+                return $resource( url, params);
+                if ( !this.id ) {
+                             return this.$create();
+                }
+                      else {
+                            return this.$update221();
+                          }
+            };
+
+            return resource;
+        };
+    }]);
+
+
+
+    var helloApp = angular.module( "HelloApp", [ 'my.resource' ] );
+    helloApp.factory( 'User', [ 'Resource', function( $resource ) {
+        return $resource( '/recipes/:id', { id: '@id' } );
+    }]);
+/*    var helloApp = angular.module("HelloApp", [ 'ngResource']);
+
+
+    helloApp.factory( 'User', [ '$resource', function( $resource ) {
+
+
+
+        return $resource( '/recipes/:id', { id: '@id' } );
+    }]);*/
+
+    helloApp.controller("divController", [ '$scope','User' ,function($scope,User) {
+        $scope.user="22222";
+        var aa=new User;
+        aa.id="33333";
+        //User.get({id:11122})
+        $scope.obj2=aa.$save();
+    } ]);
+
+
+
+
+
+</script>
+<!--<script>
+
+
+
+/*
+
+    var module = angular.module( 'my.resource', [ 'ngResource' ] );
+
+    module.factory( 'Resource', [ '$resource', function( $resource ) {
+        return function( url, params, methods ) {
+            var defaults = {
+                update: { method: 'put', isArray: false },
+                create: { method: 'post' }
+            };
+
+            methods = angular.extend( defaults, methods );
+
+            var resource = $resource( url, params, methods );
+
+            resource.prototype.$save = function() {
+                if ( !this.id ) {
+                    return this.$create();
+                }
+                else {
+                    return this.$update();
+                }
+            };
+
+            return resource;
+        };
+    }]);
+
+
+
+
+*/
+
+
+
+//var helloApp = angular.module("helloApp", [ 'ngResource' ]);
+/*
+    var module2 = angular.module( 'services', [ 'ngResource' ] );
+    module2.factory( 'User', [ 'Resource', function( $resource ) {
+        return $resource( '/recipes/:id', { id: '@id' } );
+    }]);
+
+    var aa=User.get( { id: 1 });
+    console.log(aa);
+*/
+
+/*
+
+
+
+
+
+
+
+    var services = angular.module('guthub.services', ['ngResource']);
+    services.factory('Recipe', ['$resource',
+        function($resource) {
+            return $resource('/recipes/:id', {id: '@id'});
+        }]);
+    services.factory('MultiRecipeLoader', ['Recipe', '$q',
+        function(Recipe, $q) {
+            return function() {
+                var delay = $q.defer(); Recipe.query(function(recipes) {
+                    delay.resolve(recipes);
+                }, function() {
+                    delay.reject('Unable to fetch recipes');
+                });
+                return delay.promise;};
+        }]);
+    services.factory('RecipeLoader', ['Recipe', '$route', '$q',
+        function(Recipe, $route, $q) {
+            return function() {
+                var delay = $q.defer();
+                Recipe.get({id: $route.current.params.recipeId}, function(recipe) {
+                    delay.resolve(recipe);
+                }, function() {
+                    delay.reject('Unable to fetch recipe ' + $route.current.params.recipeId);
+                });
+                return delay.promise;
+            };
+        }]);
+*/
+
+    function divController($scope){
+        $scope.user="aaa";
+
+        //var _obj2 = new Recipe.get({id:111});
+        //$scope.obj2=User.get({ id: 1 });
+        //$scope.id=Recipe.get({id:222}).id;
+    }
+
+
+</script>-->
+</body>
+</html>

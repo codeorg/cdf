@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app>
+<head >
+    <meta charset="UTF-8">
+    <script src="/js/angular.min.js"></script>
+    <title></title>
+</head>
+<body ng-controller="shopController">
+<h1>shop</h1>
+<div>
+    <ul>
+        <li ng-repeat="item in items">title:{{item.title}}  remark:{{item.remark}} id:{{item.id}}</li>
+    </ul>
+</div>
+<script>
+    function shopController($scope,$http){
+        //$scope.items=[{id:11,title:"title11",remark:"remark11"},{id:112,title:"title112",remark:"remark112"}];
+
+        $http.get("/test").success(function(data,status,header,config){
+            $scope.items=data;
+        });
+    }
+</script>
+</body>
+</html>

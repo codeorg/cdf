@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="lib/ng/angular.min.js?v=2"></script>
+
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="app">
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="tabbable" id="tabs-534512">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panel-949624" data-toggle="tab">第一部分</a>
+                    </li>
+                    <li>
+                        <a href="#panel-472671" data-toggle="tab">第二部分</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-949624">
+                        <p>
+                            第一部分内容.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="panel-472671">
+                        <p>
+                            第二部分内容.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul class="nav nav-tabs">
+    <li ng-class="active">
+        <a ng-click="showGrid=true;active='active';active2=''">表格1</a>
+    </li>
+    <li ng-class="active2">
+        <a ng-click="showGrid=false;active='';active2='active'">表格2</a>
+    </li>
+</ul>
+<div ng-if="showGrid" class="gridStyle" ng-grid="gridOptions"></div>
+<div ng-if="!showGrid" class="gridStyle" ng-grid="gridOptions2"></div>
+
+<tabset>
+    <div ng-controller="TabsParentController">
+        <tabset class="nav nav-tabs">
+            <tab ng-repeat="workspace in workspaces"
+                 heading="{{workspace.name}}"
+                 active=workspace.active>
+                <div ng-controller="TabsChildController"
+                     ng-init="workspace=workspace">
+                    <div>
+                        {{workspace.id}} : {{ workspace.name}}
+                    </div>
+                    <input type="text" ng-model="workspace.name"/>
+                </div>
+            </tab>
+            <tab select="addWorkspace()">
+                <tab-heading>
+                    <i class="icon-plus-sign"></i>
+                </tab-heading>
+            </tab>
+        </tabset>
+    </div>
+<script>
+   var  module =angular.module('app', ['ui.bootstrap']);
+    module.controller("TabsParentController", function ($scope) {
+
+        var setAllInactive = function() {
+            angular.forEach($scope.workspaces, function(workspace) {
+                workspace.active = false;
+            });
+        };
+
+        var addNewWorkspace = function() {
+            var id = $scope.workspaces.length + 1;
+            $scope.workspaces.push({
+                id: id,
+                name: "Workspace " + id,
+                active: true
+            });
+        };
+
+        $scope.workspaces =
+                [
+                    { id: 1, name: "Workspace 1", active:true  },
+                    { id: 2, name: "Workspace 2", active:false }
+                ];
+
+        $scope.addWorkspace = function () {
+            setAllInactive();
+            addNewWorkspace();
+        };
+
+    });
+</script>
+</tabset>
+</body>
+</html>

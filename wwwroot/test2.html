@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html >
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/js/angular.min.js"></script>
+</head>
+<body>
+<h1>Sign Up</h1>
+<form ng-app="" name='addUserForm' ng-controller="AddUserController">
+    <div ng-show='message'>{{message}}</div>
+    <div>First name: <input name='firstName' ng-model='first' required>
+        <span ng-show="first.$error.required">Email is required.</span>
+    </div>
+    <div>Last name: <input ng-model='user.last' required></div>
+    <div>Email: <input type='email' ng-model='user.email' required>
+
+        <span ng-show="user.email.$error.required">Email is required.</span>
+        <span>{{user.email}}</span>
+    </div>
+    <div>Age: <input type='number'
+                     ng-model='user.age' ng-maxlength='3'
+                     ng-min='1'></div>
+    <div><button ng-click='addUser()'
+                 ng-disabled='!addUserForm.$valid'>Submit</button>
+    </div>
+    <script>
+        function AddUserController($scope) {
+
+            $scope.first="sssss";
+
+            //$scope.user={"email":"kalaco@qqq.com"}
+            //console.log($scope.user.email.$error.required);
+     /*       $scope.message = '';
+            $scope.addUser = function () {
+                // TODO for the reader: actually save user to database...
+                $scope.message = 'Thanks, ' + $scope.user.first + ', we added you!';
+            };*/
+        }
+    </script>
+ </form>
+</body>
+</html>
