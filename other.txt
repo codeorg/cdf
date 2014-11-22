@@ -75,3 +75,51 @@ npm install serve-favicon -g
 //本地目录npm install -d 可以自动配置package.json，并安装所有需要依赖的包
 
 全局需要安装npm install hbs
+
+
+
+127.0.0.1 codeorg.com
+
+
+192.30.252.131 github.com
+192.30.252.131 www.github.com
+192.30.252.144 nodeload.github.com
+103.245.222.133 raw.github.com
+103.245.222.133 documentcloud.github.com
+103.245.222.133 pages.github.com
+103.245.222.184 github.global.ssl.fastly.net
+103.245.222.133 google.github.io
+
+127.0.0.1 activate.adobe.com
+127.0.0.1 practivate.adobe.com
+127.0.0.1 ereg.adobe.com
+127.0.0.1 activate.wip3.adobe.com
+127.0.0.1 wip3.adobe.com
+127.0.0.1 3dns-3.adobe.com
+127.0.0.1 3dns-2.adobe.com
+127.0.0.1 adobe-dns.adobe.com
+127.0.0.1 adobe-dns-2.adobe.com
+127.0.0.1 adobe-dns-3.adobe.com
+127.0.0.1 ereg.wip3.adobe.com
+127.0.0.1 activate-sea.adobe.com
+127.0.0.1 wwis-dubc1-vip60.adobe.com
+127.0.0.1 activate-sjc0.adobe.com
+
+#GoogleGCM
+202.65.246.80 www.google.com.hk
+64.233.182.188 mtalk.google.com
+
+#GoogleCode
+74.125.25.82 autoproxy-gfwlist.googlecode.com
+74.125.25.82 chromium.googlecode.com
+74.125.25.82 cjxlist.googlecode.com
+74.125.25.82 closure-library.googlecode.com
+74.125.25.82 earth-api-samples.googlecode.com
+74.125.25.82 gmaps-samples-flash.googlecode.com
+74.125.25.82 goagent.googlecode.com
+74.125.25.82 google-code-feed-gadget.googlecode.com
+74.125.25.82 haoutil.googlecode.com
+74.125.25.82 huhamhire-hosts.googlecode.com
+74.125.25.82 imoutohost.googlecode.com
+74.125.25.82 simpleu.googlecode.com
+74.125.25.82 smarthosts.googlecode.com
