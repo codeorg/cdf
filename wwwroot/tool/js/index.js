@@ -291,19 +291,20 @@ var getErrs=function(obj){
 //---------------------------------------- 得到验证项表格 --------------------------------------------//
 var getTableByType=function(_t){
     _t=_t.toLowerCase();
+    var rnd=Math.floor(Math.random()*1000000);
     switch (_t){
         case "select":
             return  '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必选</td><td><input name="co_required" type="checkbox"  value="true"></td><td><input  name="msg_required" class="form-control" placeholder="请选择地区"></td></tr>'+
-                '<tr><td>选中事件<br>如：省份，地区等连动</td><td><input name="co_change" class="form-control" value="" placeholder="onchange（ng-change）事件名"><textarea name="msg_blur" rows="3" class="form-control text-func" placeholder="function(){//代码...}"></textarea></td><td>N/A</td></tr>'+
+                '<tr><td>选中事件<br>如：省份，地区等连动</td><td><input name="co_change" class="form-control" value="" placeholder="onchange（ng-change）事件名"><textarea name="msg_blur" rows="3" class="form-control text-func" placeholder="$scope.checkUser=function(){$scope.isPost=true;//代码...}"></textarea></td><td>N/A</td></tr>'+
                 '</table>';
         case "radio":
         case "checkbox":
             return  '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必选</td><td><input name="co_required" type="checkbox"  value="true"></td><td><input  name="msg_required" class="form-control" placeholder="请选择地区"></td></tr>'+
                 '</table>';
         case "button":
@@ -317,7 +318,7 @@ var getTableByType=function(_t){
         case "number":
             return '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必须</td><td><input id="aaaa" name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
                 '<tr><td>最小值</td><td><input  name="co_min"  class="form-control" value=""></td><td><input name="msg_min" class="form-control" placeholder="不能小于" value="不能小于"></td></tr>'+
                 '<tr><td>最大值</td><td><input  name="co_max"  class="form-control" value=""></td><td><input name="msg_max" class="form-control" placeholder="不能大于" value="不能大于"></td></tr>'+
@@ -325,51 +326,43 @@ var getTableByType=function(_t){
                 '<tr><td>最大长度</td><td><input name="co_maxlength" class="form-control" value=""></td><td><input name="msg_maxlength" class="form-control" placeholder="不能大于{0}位" value="不能大于{0}位"></td></tr>'+
                 '<tr><td>数字类型</td><td>N/A</td><td><input name="msg_typeerr" class="form-control" placeholder="请输入正确的数字" value="请输入正确的数字"></td></tr>'+
                 '<tr><td>正则表达式</td><td><input name="co_pattern" class="form-control"></td><td><input name="msg_pattern" class="form-control"></td></tr>'+
-                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="function(){//代码...}">$scope.checkUser=function(){' +
-                '$scope.isPost=true;' +
-                'alert(1111);' +
-                '}</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
+                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="$scope.checkUser=function(){$scope.isPost=true;//代码...}">' +
+                '</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
                 '</table>';
         case "email":
             return '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必须</td><td><input id="aaaa" name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
                 '<tr><td>最少长度</td><td><input  name="co_minlength"  class="form-control" value=""></td><td><input name="msg_minlength" class="form-control" placeholder="不能少于{0}位" value="不能少于{0}位"></td></tr>'+
                 '<tr><td>最大长度</td><td><input name="co_maxlength" class="form-control" value=""></td><td><input name="msg_maxlength" class="form-control" placeholder="不能大于{0}位" value="不能大于{0}位"></td></tr>'+
                 '<tr><td>email类型</td><td>N/A</td><td><input name="msg_typeerr" class="form-control" placeholder="请输入合法的Email" value="请输入合法的Email"></td></tr>'+
                 '<tr><td>正则表达式</td><td><input name="co_pattern" class="form-control"></td><td><input name="msg_pattern" class="form-control"></td></tr>'+
-                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="function(){//代码...}">$scope.checkUser=function(){' +
-                '$scope.isPost=true;' +
-                'alert(1111);' +
-                '}</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
+                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="$scope.checkUser=function(){$scope.isPost=true;//代码...}">' +
+                '</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
                 '</table>';
         case "url":
             return '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必须</td><td><input id="aaaa" name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
                 '<tr><td>最少长度</td><td><input  name="co_minlength"  class="form-control" value=""></td><td><input name="msg_minlength" class="form-control" placeholder="不能少于{0}位" value="不能少于{0}位"></td></tr>'+
                 '<tr><td>最大长度</td><td><input name="co_maxlength" class="form-control" value=""></td><td><input name="msg_maxlength" class="form-control" placeholder="不能大于{0}位" value="不能大于{0}位"></td></tr>'+
                 '<tr><td>URL类型</td><td>N/A</td><td><input name="msg_typeerr" class="form-control" placeholder="请输入正确的URL" value="请输入正确的URL"></td></tr>'+
                 '<tr><td>正则表达式</td><td><input name="co_pattern" class="form-control"></td><td><input name="msg_pattern" class="form-control"></td></tr>'+
-                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="function(){//代码...}">$scope.checkUser=function(){' +
-                '$scope.isPost=true;' +
-                'alert(1111);' +
-                '}</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
+                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：email是否重复</td><td><input name="co_blur" class="form-control" value="check()" placeholder="nblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="$scope.checkUser=function(){$scope.isPost=true;//代码...}">' +
+                '</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
                 '</table>';
         default:
             return '<table class="table table-bordered">'+
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
-                '<tr><td>name</td><td><input name="co_name" class="form-control" value="text1"></td><td>N/A</td></tr>'+
-                '<tr><td>是否必须</td><td><input id="aaaa" name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
+                '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
+                '<tr><td>是否必须</td><td><input  name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
                 '<tr><td>最少长度</td><td><input  name="co_minlength"  class="form-control" value=""></td><td><input name="msg_minlength" class="form-control" placeholder="不能少于{0}位" value="不能少于{0}位"></td></tr>'+
                 '<tr><td>最大长度</td><td><input name="co_maxlength" class="form-control" value=""></td><td><input name="msg_maxlength" class="form-control" placeholder="不能大于{0}位" value="不能大于{0}位"></td></tr>'+
                 '<tr><td>正则表达式</td><td><input name="co_pattern" class="form-control" value="/^[A-Za-z0-9]+$/"></td><td><input name="msg_pattern" class="form-control" value="必须是：A-Za-z0-9"></td></tr>'+
-                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：用户名是否存在</td><td><input name="co_blur" class="form-control" value="checkUser()" placeholder="onblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="function(){//代码...}">$scope.checkUser=function(){' +
-                '$scope.isPost=true;' +
-                'alert(1111);' +
-                '}</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
+                '<tr><td>失去焦点事件<br>主要验证Ajax回调<br>如：用户名是否存在</td><td><input name="co_blur" class="form-control" value="" placeholder="onblur（ng-blur）事件名"><textarea name="co_blur_function" rows="3" class="form-control text-func" placeholder="$scope.checkUser=function(){$scope.isPost=true;//代码...}">' +
+                '</textarea></td><td><input name="msg_blur" class="form-control" placeholder="如：用户名已经存在"></td></tr>'+
                 '</table>';
     }
 }
