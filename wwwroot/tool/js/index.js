@@ -346,7 +346,7 @@ var getTableByType=function(_t){
                 '<tr><td width="20%">描述</td><td width="35%">值</td><td width="45%">错误提示</td></tr>'+
                 '<tr><td>name</td><td><input name="co_name" class="form-control" value="name'+rnd+'"></td><td>N/A</td></tr>'+
                 '<tr><td>是否必须</td><td><input id="aaaa" name="co_required" type="checkbox" ></td><td><input  name="msg_required" class="form-control" placeholder="您输入的不能为空" value="您输入的不能为空"></td></tr>'+
-                '<tr><td>最少长度</td><td><input  name="co_minlength"  class="form-control" value=""></td><td><input name="msg_minlength" class="form-control" placeholder="不能少于{0}位" value="不能少于{0}位"></td></tr>'+
+                '<tr><td>最少长度</td><td><input name="co_minlength"  class="form-control" value=""></td><td><input name="msg_minlength" class="form-control" placeholder="不能少于{0}位" value="不能少于{0}位"></td></tr>'+
                 '<tr><td>最大长度</td><td><input name="co_maxlength" class="form-control" value=""></td><td><input name="msg_maxlength" class="form-control" placeholder="不能大于{0}位" value="不能大于{0}位"></td></tr>'+
                 '<tr><td>URL类型</td><td>N/A</td><td><input name="msg_typeerr" class="form-control" placeholder="请输入正确的URL" value="请输入正确的URL"></td></tr>'+
                 '<tr><td>正则表达式</td><td><input name="co_pattern" class="form-control"></td><td><input name="msg_pattern" class="form-control"></td></tr>'+

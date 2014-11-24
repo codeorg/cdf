@@ -1,4 +1,6 @@
 var express = require('express');
+//var jsdom = require("jsdom");
+var $ = require("jquery");
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require('fs');
@@ -47,7 +49,14 @@ app.all('/codeview*', function(req, res) {
 
     res.render('tool/ng-form',{'control':s,'layout':''});
 });
-
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
+}
 
 app.all('/recipes/:id', function(req, res) {
     res.writeHead(200, {"Content-Type": "application/json"});
@@ -79,7 +88,7 @@ var extend=function(o,n,override){
 
 //console.log(req.method);
 
-app.get('/', function(req, res) {
+app.get('/aa', function(req, res) {
 /*    res.writeHead(200,{"Content-Type":"text/json"});
    // res.write();
     res.write(JSON.stringify({ id: 1 }));
@@ -92,13 +101,13 @@ app.get('/', function(req, res) {
      //var app3=require('c:\\Users\\Administrator\\WebstormProjects\\untitled3\\app.tool');
      //app3.listen(8080);*/
 
-    res.locals = {
+/*    res.locals = {
         some_value: 'foo bar',
         list: [{'id':'cat','remark':'dog'},{'id':'cat2','remark':'dog2'} ]
     }
     //res.render('index');
-    console.log(req.fullURL2()+'---'+req.params.user);
-    res.render('index2',{'test':'aaa','test2':'2222','layout':'layout2'});
+    console.log(req.fullURL2()+'---'+req.params.user);*/
+    res.render('index2',{'test':$('<a>ddddsssd</a>sss').text(),'test2':'2222','layout':'layout2'});
 });
-app.listen(81);
+app.listen(80);
 //module.exports = app;

@@ -1,0 +1,26 @@
+本人操作系统win8 server r2　64位
+1.安装python2.76 32位（和nodejs对应都是32位）
+　配置环境变量
+  Path=c:\python27
+  PYTHON=c:\python27\python.exe
+2.安装nodejs 0.10.33 32位　
+配置环境变量
+Path=C:\Program Files (x86)\nodejs　（默认安装会多一个\去了\）
+3.安装vs c++ 2010 express　就可以
+4.CMD命令运行　npm install -g node-gyp
+5.国内访问很慢，安装的时候经常等很长时间，然后不成功，回滚重来，于是我们把它的文件放到本机来安装
+进入http://nodejs.org/dist/
+进入安装的node版本，我是v0.10.33（命令node -v可查看版本）
+进入http://nodejs.org/dist/v0.10.33/　
+用ＩＥ去访问上面的网址，空白处点击ＩＥ右键，使用迅雷下载全部连接，然后确定，把index.html
+全去掉只要SHASUMS.txt,SHASUMS256.txt,node-v0.10.33.tar.gz ,node.lib  ,保存目录v0.10.33
+然后网页中选中x64进入http://nodejs.org/dist/v0.10.33/x64/把node.lib文件下载到刚刚保存的v0.10.33/x64
+目录中。然后把你的v0.10.33文件放到你的项目中静态文件夹下的dist目录下，
+然后修改C:\Windows\System32\drivers\etc\hosts，添加127.0.0.1 nodejs.org
+确保http://nodejs.org/dist/v0.10.33/node-v0.10.33.tar.gz　可以下载
+6.cd my_node_addon 进入你需要编译的文件目录 有binding.gyp文件的
+我是编译contextify，（从https://github.com/brianmcd/contextify下载下来的包，直接用npm install contextify
+会报错，编译之前把依赖也装一下
+7.node-gyp configure
+8.node-gyp build
+

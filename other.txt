@@ -77,6 +77,17 @@ npm install serve-favicon -g
 全局需要安装npm install hbs
 
 
+安装npm install jQuery　大小写区分
+
+//win8 server
+安装jsdom
+1.安装 python2.7,设置环境变量；
+2. 安装 visual c++ 2010 Express；
+6. 执行 npm install jsdom
+
+
+
+
 
 127.0.0.1 codeorg.com
 
