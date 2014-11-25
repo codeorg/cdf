@@ -24,3 +24,20 @@ Path=C:\Program Files (x86)\nodejs　（默认安装会多一个\去了\）
 7.node-gyp configure
 8.node-gyp build
 
+----------------------------------------------------------------
+
+jquery和正则测试比较
+本人装jquery不是用做web spider
+只做控件容错，解析文件大小一般不超过30K,
+执行时间
+测试文件23k文本文件
+createJqueryObject: 94ms　//创建对象所需要时间
+jquery: 181ms　　//查找文件属性100次　，所需要时间
+RegEx: 3ms　　　//查找文件属性100次　，所需要时间
+
+以下1000次所需要时间
+createJqueryObject: 96ms
+jquery: 1386ms
+RegEx: 10ms
+
+放弃nodejs-jquery 后台解析

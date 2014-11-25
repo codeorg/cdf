@@ -1,6 +1,4 @@
 var express = require('express');
-//var jsdom = require("jsdom");
-var $ = require("jquery");
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require('fs');
@@ -9,6 +7,10 @@ require('./common/extend');
 var base64=require('./wwwroot/public/base64');
 var url = require('url');
 var hbs = require('hbs');
+var $ = require('jquery');
+var path = require("path");
+
+//var $ = require('./wwwroot/lib/jquery/jquery-2.1.1.min.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -21,7 +23,7 @@ app.use(favicon(__dirname + '/wwwroot/favicon.ico'));
  hbs.registerPartial('partial', fs.readFileSync(__dirname + '/views/partial.hbs', 'utf8'));
  hbs.registerPartials(__dirname + '/views/partials');
 
-*/
+ */
 
 
 // set the view engine to use handlebars
@@ -30,6 +32,150 @@ app.set('views', __dirname + '/views');
 
 app.use(express.static(__dirname + '/wwwroot'));
 //app.use(express.static(__dirname + '/views'));
+
+app.get('/v0.10.33/:id',function(req,res,next){
+    //..db get file realpath
+    res.download(realpath,filename);
+});
+
+app.get('/jq:id', function(req, res) {
+
+
+    var filepath = path.join(__dirname+"/wwwroot/template", "test1.html");
+    console.log(filepath);
+    console.time('openfile');
+    console.time('other');
+    fs.readFile(filepath, "utf-8", function (err, file) {
+
+        if (err) {
+            res.writeHead(500, {
+                'Content-Type': 'text/plain'
+            });
+
+            res.end(err);
+        } else {
+
+            res.header("Content-Type", "text/html; charset=utf-8");
+            console.timeEnd('other');
+            console.time('createJqueryObject');
+            var obj=$(file);
+            console.timeEnd('createJqueryObject');
+
+            console.time('jquery');
+            for(var i=0;i<1000;i++)
+            {
+                obj.find('[name="name23258"]').text();
+            }
+            res.write(obj.find('[name="name23258"]').text()+"<br>"+req.params.id);
+            console.timeEnd('jquery');
+
+            console.time('RegEx');
+            var re =/<textarea name="name23258"(.+?)>(.+?)<\/textarea>/;
+            //re.exec(url);
+            var arr = file.match(re);
+            for(var i=0;i<1000;i++)
+            {
+                var t= file.match(re);
+            }
+
+            res.write("<br>"+arr[2]);
+            //return arr;
+
+            //console.log(file);
+
+            res.end();
+
+            console.timeEnd('RegEx');
+        }
+        console.timeEnd('openfile');
+    });
+
+    //res.end($('<a>ddddd</a>').text());
+});
+
+
+/*
+ app.get('/dist/v0.10.33/node.lib', function(req, res) {
+
+ var pathname = url.parse(req.url).pathname;
+ console.log(pathname);
+ //var filepath = path.join("./tmp", "wwwroot", pathname);
+ var filepath = path.join(__dirname+"/wwwroot", "dist/v0.10.33/node.lib");
+ console.log(filepath);
+
+ fs.readFile(filepath, "binary", function (err, file) {
+ if (err) {
+ res.writeHead(500, {
+ 'Content-Type': 'text/plain'
+ });
+
+ res.end(err);
+ } else {
+ res.writeHead(200, {
+ 'Content-Type': 'application/zip'
+ });
+
+ res.write(file, "binary");
+
+ res.end();
+ }
+ });
+
+ */
+/*
+ var stream = fs.createReadStream(filepath, {flags : "r", encoding : null});
+ stream.on("error", function() {
+ res.writeHead(404);
+ res.end();
+ });
+ stream.pipe(res);
+ *//*
+
+
+ })
+
+
+ app.get('/dist/v0.10.33/x64/node.lib', function(req, res) {
+
+ var pathname = url.parse(req.url).pathname;
+ console.log(pathname);
+ //var filepath = path.join("./tmp", "wwwroot", pathname);
+ var filepath = path.join(__dirname+"/wwwroot", "dist/v0.10.33/x64/node.lib");
+ console.log(filepath);
+
+ fs.readFile(filepath, "binary", function (err, file) {
+ if (err) {
+ res.writeHead(500, {
+ 'Content-Type': 'text/plain'
+ });
+
+ res.end(err);
+ } else {
+ res.writeHead(200, {
+ 'Content-Type': 'application/zip'
+ });
+
+ res.write(file, "binary");
+
+ res.end();
+ }
+ });
+
+ */
+/*
+ var stream = fs.createReadStream(filepath, {flags : "r", encoding : null});
+ stream.on("error", function() {
+ res.writeHead(404);
+ res.end();
+ });
+ stream.pipe(res);
+ *//*
+
+
+ })
+ */
+
+
 app.get('/test', function(req, res) {
     res.writeHead(200,{"Content-Type":"text/json"});
 
@@ -44,19 +190,12 @@ app.all('/codeview*', function(req, res) {
     //var arg = url.parse(req.url, true).query;
 
     var s=base64.Base64.decode(req.body.codeorg_cd);
-   // s=s.replace('{/script}','</script>');
+    // s=s.replace('{/script}','</script>');
     //res.end(s);
 
     res.render('tool/ng-form',{'control':s,'layout':''});
 });
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-            break;
-        }
-    }
-}
+
 
 app.all('/recipes/:id', function(req, res) {
     res.writeHead(200, {"Content-Type": "application/json"});
@@ -67,9 +206,9 @@ app.all('/recipes/:id', function(req, res) {
 
 
     var post='';
-/*req.on('data',function(chunk){
-    post+=chunk;
-});*/
+    /*req.on('data',function(chunk){
+     post+=chunk;
+     });*/
 
     obj2.method=req.method;
     var obj3=    extend(obj,obj2,true);
@@ -88,11 +227,11 @@ var extend=function(o,n,override){
 
 //console.log(req.method);
 
-app.get('/aa', function(req, res) {
-/*    res.writeHead(200,{"Content-Type":"text/json"});
-   // res.write();
-    res.write(JSON.stringify({ id: 1 }));
-    res.end();*/
+app.get('/', function(req, res) {
+    /*    res.writeHead(200,{"Content-Type":"text/json"});
+     // res.write();
+     res.write(JSON.stringify({ id: 1 }));
+     res.end();*/
 
 
     /*   //c:\Users\Administrator\WebstormProjects\untitled6
@@ -101,13 +240,13 @@ app.get('/aa', function(req, res) {
      //var app3=require('c:\\Users\\Administrator\\WebstormProjects\\untitled3\\app.tool');
      //app3.listen(8080);*/
 
-/*    res.locals = {
+    res.locals = {
         some_value: 'foo bar',
         list: [{'id':'cat','remark':'dog'},{'id':'cat2','remark':'dog2'} ]
     }
     //res.render('index');
-    console.log(req.fullURL2()+'---'+req.params.user);*/
-    res.render('index2',{'test':$('<a>ddddsssd</a>sss').text(),'test2':'2222','layout':'layout2'});
+    console.log(req.fullURL2()+'---'+req.params.user);
+    res.render('index2',{'test':'aaa','test2':'2222','layout':'layout2'});
 });
 app.listen(80);
 //module.exports = app;
