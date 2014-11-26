@@ -7,7 +7,7 @@ require('./common/extend');
 var base64=require('./wwwroot/public/base64');
 var url = require('url');
 var hbs = require('hbs');
-var $ = require('jquery');
+//var $ = require('jquery');
 var path = require("path");
 
 //var $ = require('./wwwroot/lib/jquery/jquery-2.1.1.min.js');
@@ -38,32 +38,102 @@ app.get('/v0.10.33/:id',function(req,res,next){
     res.download(realpath,filename);
 });
 
+/*
+var getMsg=function(controlname,errorname,html) {
+    if(!controlname) return "";
+    errorname=errorname.replace("ng-","");
+    //var pat = /<[^>]+.$error=['"]*(.*?)['"]*[^>]*>/g;
+    var reg = new RegExp("<[^>]+" + controlname + "\\.\\$error\\."+errorname+"[^>]+>(.*?)<[^>]+>");
+    var m = reg.test(html);
+    if (!m) return "";
+    return RegExp.$1;
 
+}*/
+
+var getMsg=function(controlname,errorname,msgSet) {
+
+    errorname=errorname.replace("ng-","");
+   var name=controlname+"-"+errorname;
+    if (!msgSet.hasOwnProperty(name))return "";
+    return msgSet[name];
+}
+
+var getmsgSet=function(html) {
+    //var reg = new RegExp("<[^>]+\\.\\$error\\.[^>]+>(.*?)<[^>]+>");
+    var reg = /<[^>]+\.\$error\.[^>]+>(.*?)<[^>]+>/gi;
+    var m = html.match(reg);
+    var obj={};
+   for(i in m){
+
+       var r = /<[^\.]+\.([^\.]+)\.\$error\.([^\s\&"]+)[^>]+>(.*?)<[^>]+>/i;
+       var m2 = m[i].match(r);
+       if(!m2)continue;
+       obj[m2[1]+"-"+m2[2]]=m2[3];
+       //arr.push({m2[1]+"-"+m2[2]:m2[3]});
+       //arr.push(obj);
+   }
+
+    return obj;
+}
 
 var getJsonByString=function(html){
-    //
+
+    var controls=[];
+    //console.log(control['ng-minlength']);
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
     var ms=html.match(pat);
     var atts='';
+    var msgs=getmsgSet(html);
     for(i in ms) {
+
         //var reg=/([^=\s]+=['"]?(.*?)['"]?)|([^=\s<>]+)/gi;
-        var reg=/([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
-        var att=ms[i].match(reg);
-        for(j in att) {
-            var r=/([^=\s]+)=['"](.*?)['"]/;
-            var atm=att[j].match(r);
-            if(!atm)
-                atts+=att[j]+'\n' ;
-            else
-                atts+=atm[1]+'\n' ;
+        var reg = /([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
+        var att = ms[i].match(reg);
+        var c = {
+            "name":{"value":"","msg":""},
+            "ng-model":{"value":"","msg":""},
+            "min":{"value":"","msg":""},
+            "max":{"value":"","msg":""},
+            "required":{"value":"","msg":""},
+            "ng-minlength":{"value":"","msg":""},
+            "ng-maxlength":{"value":"","msg":""},
+            "ng-pattern":{"value":"","msg":""},
+            "ng-blur":{"value":"","msg":""},
+            "ng-click":{"value":"","msg":""}
+        };
+        var name='';
+        for (j in att) {
+            var r = /([^=\s]+)=['"](.*?)['"]/;
+            var atm = att[j].match(r);
+            if (!atm) {
+                if (!c.hasOwnProperty(att[j]))continue;
+                c[att[j]]["value"] = att[j];
+                if(att[j]=="required")c[att[j]]["msg"]=getMsg(name,att[j],msgs);
+
+            }
+            else {
+                //if(atm[1]=="name") continue;
+                if (!c.hasOwnProperty(atm[1]))continue;
+                if(atm[1]=="name") name=atm[2];
+                c[atm[1]]["value"] = atm[2];
+                //console.log(getMsg(name,atm[1],html))
+                c[atm[1]]["msg"]=getMsg(name,atm[1],msgs);
+                //atts+=atm[1]+' ' ;
+
+            }
+
+
         }
+
+        controls.push(c);
     }
-    return atts;
+    return controls;
 }
+
 app.get('/jq:id', function(req, res) {
 
 
-    var filepath = path.join(__dirname+"/wwwroot/template", "test1.html");
+    var filepath = path.join(__dirname+"/wwwroot/template", "test2.html");
     console.log(filepath);
     console.time('openfile');
     console.time('other');
@@ -80,28 +150,15 @@ app.get('/jq:id', function(req, res) {
             res.header("Content-Type", "text/html; charset=utf-8");
             console.timeEnd('other');
             console.time('createJqueryObject');
-            var obj=$(file);
-            obj.find('input').eq(0).map(function(){
-               console.log(this+'=============');
+            //var obj=$(file);
+     /*       obj.find('input').eq(0).map(function(){
+             console.log(this+'=============');
 
-            })
+             })*/
             console.log(+'----------');
             console.timeEnd('createJqueryObject');
 
-            console.time('jquery');
-            for(var i=0;i<1;i++)
-            {
 
-
-                obj.find('.form-control').eq(function(i){
-                    console.log(this);
-                    this.attr().eq(function(){
-                        console.log(this)
-                    });
-                });
-            }
-            res.write(obj.find('[name="name23258"]').text()+"<br>"+req.params.id);
-            console.timeEnd('jquery');
 
             console.time('RegEx');
             //var re =/<input(.+?)name="text1"(.+?)value="(.+?)"(.+?)>/;
@@ -112,11 +169,11 @@ app.get('/jq:id', function(req, res) {
             var t='';
             for(var i=0;i<1;i++)
             {
-                t+=getJsonByString(file);
+                t+=JSON.stringify(getJsonByString(file));
                 //var t= file.match(re);
             }
 
-            res.write("<br>"+t);
+            res.write("<br>RegEx:"+t);
             //return arr;
 
             //console.log(file);

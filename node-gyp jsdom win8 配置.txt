@@ -40,4 +40,19 @@ createJqueryObject: 96ms
 jquery: 1386ms
 RegEx: 10ms
 
-放弃nodejs-jquery 后台解析
+放弃nodejs-jquery 后台解析，后计另一解决方案，预解析，提前把验证内容用JQuery生成json文件，下次直接读取json文件
+我已经放弃node-jquery,效率之低无法接受，不用引用这么庞大的包，选择正则
+            console.time('jquery');
+            var tJquery=''
+            for(var i=0;i<100;i++)
+            {
+                obj.find('input').each(function(j,o){
+                    for(jj=0;jj<this.attributes.length;jj++){
+                        tJquery+=this.attributes[jj]["name"]+' ';
+                    }
+                });
+                tJquery+='<br>';
+            }
+            res.write("<br>Jquery:"+tJquery);
+            //res.write(obj.find('[name="name23258"]').text()+"<br>"+req.params.id);
+            console.timeEnd('jquery');
