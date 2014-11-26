@@ -407,6 +407,7 @@ $('#modal-code').find('#json').click(function(){
 });
 
 var getJsonByString=function(html){
+
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
     var ms=html.match(pat);
     var atts='';
