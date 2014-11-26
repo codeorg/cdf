@@ -38,6 +38,27 @@ app.get('/v0.10.33/:id',function(req,res,next){
     res.download(realpath,filename);
 });
 
+
+
+var getJsonByString=function(html){
+    var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
+    var ms=html.match(pat);
+    var atts='';
+    for(i in ms) {
+        //var reg=/([^=\s]+=['"]?(.*?)['"]?)|([^=\s<>]+)/gi;
+        var reg=/([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
+        var att=ms[i].match(reg);
+        for(j in att) {
+            var r=/([^=\s]+)=['"](.*?)['"]/;
+            var atm=att[j].match(r);
+            if(!atm)
+                atts+=att[j]+'\n' ;
+            else
+                atts+=atm[1]+'\n' ;
+        }
+    }
+    return atts;
+}
 app.get('/jq:id', function(req, res) {
 
 
@@ -59,26 +80,42 @@ app.get('/jq:id', function(req, res) {
             console.timeEnd('other');
             console.time('createJqueryObject');
             var obj=$(file);
+            obj.find('input').eq(0).map(function(){
+               console.log(this+'=============');
+
+            })
+            console.log(+'----------');
             console.timeEnd('createJqueryObject');
 
             console.time('jquery');
-            for(var i=0;i<1000;i++)
+            for(var i=0;i<1;i++)
             {
-                obj.find('[name="name23258"]').text();
+
+
+                obj.find('.form-control').eq(function(i){
+                    console.log(this);
+                    this.attr().eq(function(){
+                        console.log(this)
+                    });
+                });
             }
             res.write(obj.find('[name="name23258"]').text()+"<br>"+req.params.id);
             console.timeEnd('jquery');
 
             console.time('RegEx');
-            var re =/<textarea name="name23258"(.+?)>(.+?)<\/textarea>/;
+            //var re =/<input(.+?)name="text1"(.+?)value="(.+?)"(.+?)>/;
             //re.exec(url);
-            var arr = file.match(re);
-            for(var i=0;i<1000;i++)
+
+
+            //var arr = file.match(re);
+            var t='';
+            for(var i=0;i<1;i++)
             {
-                var t= file.match(re);
+                t+=getJsonByString(file);
+                //var t= file.match(re);
             }
 
-            res.write("<br>"+arr[2]);
+            res.write("<br>"+t);
             //return arr;
 
             //console.log(file);

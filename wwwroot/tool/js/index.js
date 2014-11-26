@@ -137,6 +137,11 @@ var getControl=function(obj){
         '{{errs}}</div>\n</div>';
 
 
+    var fbt='<div class="form-group">' +
+        '\n<label class="col-sm-3 control-label text-right" >{{co_des}}</label>' +
+        '<div class="col-sm-9" >{{control}}'+
+        '{{errs}}</div>\n</div>';
+
     var input='\n<input type="{{co_type}}" name="{{co_name}}" class="form-control" ng-model="datatable.{{co_name}}"{{required}}{{minlength}}{{maxlength}}{{pattern}}{{blur}}{{min}}{{max}}> ';
     var ta='\n<textarea name="{{co_name}}" class="form-control" ng-model="datatable.{{co_name}}"{{required}}{{minlength}}{{maxlength}}{{pattern}}{{blur}}{{min}}{{max}}></textarea>';
     var sel='\n<select name="{{co_name}}" class="form-control" ng-model="datatable.{{co_name}}"{{required}}{{minlength}}{{maxlength}}{{pattern}}{{blur}}{{min}}{{max}}><option value="">请选择地址</option><option value="sh">上海</option></select>';
@@ -154,7 +159,7 @@ var getControl=function(obj){
         html=html.replace(/\{\{co_des\}\}/g,obj.co_des);
         break;
         case "button":
-            html= f.replace(/\{\{control\}\}/g,bt);
+            html= fbt.replace(/\{\{control\}\}/g,bt);
             html=html.replace(/\{\{click\}\}/g,errs.click);
             html=html.replace(/\{\{co_des\}\}/g,"");
             if(typeof obj.co_click_function!=="undefined")
@@ -394,3 +399,29 @@ $('#modal-code').find('#decode').click(function(){
 
     cc.val(Base64.decode(cc.val()));
 });
+$('#modal-code').find('#json').click(function(){
+
+    var cc=$('#modal-code').find('[name="codeorg_code"]');
+
+    cc.val(getJsonByString(cc.val()));
+});
+
+var getJsonByString=function(html){
+    var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
+    var ms=html.match(pat);
+    var atts='';
+    for(i in ms) {
+        //var reg=/([^=\s]+=['"]?(.*?)['"]?)|([^=\s<>]+)/gi;
+            var reg=/([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
+        var att=ms[i].match(reg);
+        for(j in att) {
+            var r=/([^=\s]+)=['"](.*?)['"]/;
+            var atm=att[j].match(r);
+            if(!atm)
+                atts+=att[j]+'\n' ;
+            else
+            atts+=atm[1]+'\n' ;
+        }
+    }
+    return atts;
+}
