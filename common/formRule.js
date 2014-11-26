@@ -59,7 +59,7 @@ var toControls=function(html){
 
 var getMsg=function(controlname,errorname,msgSet) {
     errorname=errorname.replace("ng-","");
-    var name=controlname+"-"+errorname;
+    var name=controlname+"."+errorname;
     if (!msgSet.hasOwnProperty(name))return "";
     return msgSet[name];
 }
@@ -74,7 +74,7 @@ var getmsgSet=function(html) {
         var r = /<[^\.]+\.([^\.]+)\.\$error\.([^\s\&"]+)[^>]+>(.*?)<[^>]+>/i;
         var m2 = m[i].match(r);
         if(!m2)continue;
-        obj[m2[1]+"-"+m2[2]]=m2[3];
+        obj[m2[1]+"."+m2[2]]=m2[3];
         //arr.push({m2[1]+"-"+m2[2]:m2[3]});
         //arr.push(obj);
     }

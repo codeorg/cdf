@@ -11,6 +11,8 @@ var hbs = require('hbs');
 //var $ = require('jquery');
 var path = require("path");
 var fr= require("./common/formRule");
+var ts= require("./common/test");
+var ts2= require("./common/test");
 //var $ = require('./wwwroot/lib/jquery/jquery-2.1.1.min.js');
 
 app.use(bodyParser.json());
@@ -144,6 +146,12 @@ var getJsonByString=function(html){
 app.get('/jq:id', function(req, res) {
 
     res.header("Content-Type", "text/html; charset=utf-8");
+    ts.get();
+    console.log(ts.get()+"-----------1");
+    ts.set("sssssssssssssssssss");
+    console.log(ts.get()+"-----------2");
+    //ts.set("sssssssssssssssssss");
+    console.log(ts2.get()+"-----------ts2");
 
     fr.fileToControls("test3.html",function(data){
         res.end(data);
