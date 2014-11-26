@@ -413,7 +413,7 @@ var getJsonByString=function(html){
     var atts='';
     for(i in ms) {
         //var reg=/([^=\s]+=['"]?(.*?)['"]?)|([^=\s<>]+)/gi;
-            var reg=/([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
+            var reg=/(name=['"](.*?)['"])|([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
         var att=ms[i].match(reg);
         for(j in att) {
             var r=/([^=\s]+)=['"](.*?)['"]/;

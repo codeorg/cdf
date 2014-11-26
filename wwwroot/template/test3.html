@@ -1,0 +1,19 @@
+<form  name='codeorgForm'  novalidate  >
+    <div class="form-group"
+         ng-class='{ "has-error" : codeorgForm.name500207.$invalid && (codeorgForm.name500207.$dirty || isPost)}'>
+        <label class="col-sm-3 control-label text-right" >Text</label><div class="col-sm-9" >
+        <input type="text" name="name500207" class="form-control" ng-model="datatable.name500207" required ng-minlength="2" ng-maxlength="4" ng-pattern="/^[A-Za-z0-9]+$/">
+        <p ng-show="codeorgForm.name500207.$error.required && (codeorgForm.name500207.$dirty || isPost)" class="help-block">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+        <p ng-show="codeorgForm.name500207.$error.minlength && (codeorgForm.name500207.$dirty || isPost)" class="help-block">aaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddd</p>
+        <p ng-show="codeorgForm.name500207.$error.maxlength && (codeorgForm.name500207.$dirty || isPost)" class="help-block">6666666666666666666666666666666666666666666666666666666666666</p>
+        <p ng-show="codeorgForm.name500207.$error.pattern && (codeorgForm.name500207.$dirty || isPost)" class="help-block">必须是：A-Za-z0-9</p></div>
+    </div>
+    <div class="form-group"
+               ng-class='{ "has-error" : codeorgForm.name365088.$invalid && (codeorgForm.name365088.$dirty || isPost)}'>
+    <label class="col-sm-3 control-label text-right" >Textarea</label><div class="col-sm-9" >
+    <textarea name="name365088" class="form-control" ng-model="datatable.name365088" ng-pattern="/^[A-Za-z0-9]+$/"></textarea>
+    <p ng-show="codeorgForm.name365088.$error.pattern && (codeorgForm.name365088.$dirty || isPost)" class="help-block">必须是：A-Za-z0-9</p></div>
+</div>
+
+
+</form>
