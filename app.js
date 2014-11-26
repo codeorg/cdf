@@ -41,6 +41,7 @@ app.get('/v0.10.33/:id',function(req,res,next){
 
 
 var getJsonByString=function(html){
+    //
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
     var ms=html.match(pat);
     var atts='';
