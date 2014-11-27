@@ -1,62 +1,69 @@
 var fs = require('fs');
 //--------------------------把html表单转化成json对象--------------------------//
-var toControls=function(html){
+var toRoles=function(html){
     var controls=[];
     //console.log(control['ng-minlength']);
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
-    var ms=html.match(pat);
-    var atts='';
-    var msgs=getmsgSet(html);
-    for(i in ms) {
+    var arrControl=html.match(pat);
+    var msgs=getMsgSet(html);
+    for(i in arrControl) {
         //console.time('getControlName');
-        var name=getControlName(ms[i]);
-        //console.timeEnd('getControlName');
-        //var reg=/([^=\s]+=['"]?(.*?)['"]?)|([^=\s<>]+)/gi;
-        var reg = /([^=\s]+=['"](.*?)['"])|([^=\s<>]+)/gi;
-        var att = ms[i].match(reg);
-        var c = {
-            "name":{"value":"","msg":""},
-            "ng-model":{"value":"","msg":""},
-            "min":{"value":"","msg":""},
-            "max":{"value":"","msg":""},
-            "required":{"value":"","msg":""},
-            "ng-minlength":{"value":"","msg":""},
-            "ng-maxlength":{"value":"","msg":""},
-            "ng-pattern":{"value":"","msg":""},
-            "ng-blur":{"value":"","msg":""},
-            "ng-click":{"value":"","msg":""}
-        };
+        var name=getControlName(arrControl[i]);
+        var reg = /(([^=\s]+)=['"](.*?)['"])|([^=\s<>]+)/gi;
+        var arrAttr = arrControl[i].match(reg);
+        var rule= ruleObject();
 
-
-
-        for (j in att) {
+        for (j in arrAttr) {
             var r = /([^=\s]+)=['"](.*?)['"]/;
-            var atm = att[j].match(r);
-            if (!atm) {
-                if (!c.hasOwnProperty(att[j]))continue;
-                c[att[j]]["value"] = att[j];
-                if(att[j]=="required")c[att[j]]["msg"]=getMsg(name,att[j],msgs);
+            var formatAttr = arrAttr[j].match(r);
 
+            if (!formatAttr) {
+                if (!rule.hasOwnProperty(arrAttr[j]))continue;
+                rule[arrAttr[j]]["value"] = arrAttr[j];
+                if(arrAttr[j]=="required")rule[arrAttr[j]]["msg"]=getMsg(name,arrAttr[j],msgs);
             }
             else {
-                //if(atm[1]=="name") continue;
-                if (!c.hasOwnProperty(atm[1]))continue;
-                //if(atm[1]=="name") name=atm[2];
-                c[atm[1]]["value"] = atm[2];
-                //console.log(getMsg(name,atm[1],html))
-                c[atm[1]]["msg"]=getMsg(name,atm[1],msgs);
-                //atts+=atm[1]+' ' ;
+                if (!rule.hasOwnProperty(formatAttr[1]))continue;
+                if(formatAttr[1]=="type"){
+                    rule[formatAttr[1]]["value"] = formatAttr[2];
+                    rule[formatAttr[1]]["msg"]=getMsg(name,formatAttr[2],msgs);
+                    continue;
+                }
+
+                rule[formatAttr[1]]["value"] = formatAttr[2];
+                rule[formatAttr[1]]["msg"]=getMsg(name,formatAttr[1],msgs);
 
             }
 
 
         }
-
-        controls.push(c);
+        controls.push(rule);
     }
     return controls;
 }
 
+
+/*
+*验证规则对象
+*/
+function ruleObject(){
+    return {
+        "name":{"value":"","msg":""},
+        "ng-model":{"value":"","msg":""},
+        "type":{"value":"","msg":""},
+        "min":{"value":"","msg":""},
+        "max":{"value":"","msg":""},
+        "required":{"value":"","msg":""},
+        "ng-minlength":{"value":"","msg":""},
+        "ng-maxlength":{"value":"","msg":""},
+        "ng-pattern":{"value":"","msg":""},
+        "ng-blur":{"value":"","msg":""},
+        "ng-click":{"value":"","msg":""}
+    };
+}
+/*
+ *获得消息错误　根据控件名字，错误类型　
+ */
 var getMsg=function(controlname,errorname,msgSet) {
     errorname=errorname.replace("ng-","");
     var name=controlname+"."+errorname;
@@ -64,8 +71,10 @@ var getMsg=function(controlname,errorname,msgSet) {
     return msgSet[name];
 }
 
-var getmsgSet=function(html) {
-    //var reg = new RegExp("<[^>]+\\.\\$error\\.[^>]+>(.*?)<[^>]+>");
+/*
+ *得到所有提示信息集合
+ */
+var getMsgSet=function(html) {
     var reg = /<[^>]+\.\$error\.[^>]+>(.*?)<[^>]+>/gi;
     var m = html.match(reg);
     var obj={};
@@ -78,20 +87,21 @@ var getmsgSet=function(html) {
         //arr.push({m2[1]+"-"+m2[2]:m2[3]});
         //arr.push(obj);
     }
-
     return obj;
 }
-
+/*
+ *得到控件名字
+ */
 var getControlName=function(control){
-    var pat=/name=['"](.*?)['"]/g;
+    var pat=/name=['"](.*?)['"]/i;
     var m=control.match(pat);
     if(!m) return "";
-    return [1];
+    return m[1];
 }
 /*
 * path=模板template目录下的路径，如:user/user.html
 */
-var fileToControls=function(filename,callback){
+var fileToRoles=function(filename,callback){
     //var filepath = path.join(__dirname+"/wwwroot/template", filename);
     var filepath = "./wwwroot/template/"+ filename;
     fs.readFile(filepath, "utf-8", function (err, file) {
@@ -99,11 +109,11 @@ var fileToControls=function(filename,callback){
             return {"msg":err};
         } else {
             console.time('RegEx');
-            callback(JSON.stringify(toControls(file)));
+            callback(JSON.stringify(toRoles(file)));
             console.timeEnd('RegEx');
         }
 
     });
 }
-exports.fileToControls = fileToControls;
-exports.toControls = toControls;
+exports.fileToRoles = fileToRoles;
+exports.toRoles = toRoles;

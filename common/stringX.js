@@ -1,4 +1,9 @@
 var fr = require('./formRule');
+var test = require('./test');
 String.prototype.toControls=function(){
-    return fr.toControls(this);
+    return fr.toRoles(this);
+}
+
+String.prototype.test=function(){
+    return test.get();
 }

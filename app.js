@@ -61,7 +61,7 @@ var getMsg=function(controlname,errorname,msgSet) {
     return msgSet[name];
 }
 
-var getmsgSet=function(html) {
+var getMsgSet=function(html) {
     //var reg = new RegExp("<[^>]+\\.\\$error\\.[^>]+>(.*?)<[^>]+>");
     var reg = /<[^>]+\.\$error\.[^>]+>(.*?)<[^>]+>/gi;
     var m = html.match(reg);
@@ -92,7 +92,7 @@ var getJsonByString=function(html){
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
     var ms=html.match(pat);
     var atts='';
-    var msgs=getmsgSet(html);
+    var msgs=getMsgSet(html);
     for(i in ms) {
         //console.time('getControlName');
         var name=getControlName(ms[i]);
@@ -147,21 +147,22 @@ app.get('/jq:id', function(req, res) {
 
     res.header("Content-Type", "text/html; charset=utf-8");
     ts.get();
+    console.log("".test()+"-----------test()");
     console.log(ts.get()+"-----------1");
     ts.set("sssssssssssssssssss");
     console.log(ts.get()+"-----------2");
     //ts.set("sssssssssssssssssss");
     console.log(ts2.get()+"-----------ts2");
+    console.log("".test()+"-----------test()");
 
-
-    fr.fileToControls("test3.html",function(data){
+    fr.fileToRoles("test2.html",function(data){
         res.end(data);
     });
 
 /*
 
     var filepath = path.join(__dirname+"/wwwroot/template", "test3.html");
-    console.log(filepath.toControls());
+    console.log(filepath.toRoles());
 
     console.log(filepath);
     console.time('openfile');
@@ -200,7 +201,7 @@ app.get('/jq:id', function(req, res) {
             var t='';
             for(var i=0;i<1;i++)
             {
-                t+=JSON.stringify(file.toControls());
+                t+=JSON.stringify(file.toRoles());
                 //var t= file.match(re);
             }
 
