@@ -12,14 +12,6 @@
     <form ng-app="app" name='codeorgForm' ng-controller="AddUserController"  novalidate  >
 
 
-    <div class="form-group" ng-class='{ "has-error" : codeorgForm.text1.$invalid && (codeorgForm.text1.$dirty || isPost)}'><label>标题</label><input type="text" name="text1" class="form-control" ng-model="datatable.text1" required ng-minlength=3 ng-maxlength=11 ng-pattern="/^[A-Za-z0-9]+$/"> <p ng-show="codeorgForm.text1.$error.required && (codeorgForm.text1.$dirty || isPost)" class="help-block">您输入的不能为空</p><p ng-show="codeorgForm.text1.$error.minlength && (codeorgForm.text1.$dirty || isPost)" class="help-block">不能少于{0}位</p><p ng-show="codeorgForm.text1.$error.maxlength && (codeorgForm.text1.$dirty || isPost)" class="help-block">不能大于{0}位</p><p ng-show="codeorgForm.text1.$error.pattern && (codeorgForm.text1.$dirty || isPost)" class="help-block"></p></div>
-    <div class="form-group"
-         ng-class="{ 'has-error' : codeorgForm.name.$invalid && (!codeorgForm.name.$pristine || isPost)}">
-        <label>Name*</label>
-        <input type="text" name="name" class="form-control" ng-model="user.name" ng-blur="checkUser()" required>
-        <p ng-show="codeorgForm.name.$error.required && (!codeorgForm.name.$pristine || isPost)" class="help-block">You name is required.</p>
-    </div>
-
 
 
     <!-- USERNAME -->
@@ -64,9 +56,6 @@
 <script>
     var  appM =angular.module('app', ['ngResource']);
     appM.factory( 'Resource', [ '$resource', function( $resource ) {
-
-
-
         return $resource( '/recipes/:id', { id: '@id' } );
     }])
 
@@ -80,6 +69,11 @@
 
         $scope.addUser=function(){
             $scope.isPost=true;
+            Resource.save({id:"ssssww"},$scope.user,function(data){
+
+                $scope.msg=data;
+            })
+
             //var obj=$scope.user;
             //$scope.user={"name":"ssssssss"};
            // $scope.msg=Resource.save({id:"ssssww"},obj);

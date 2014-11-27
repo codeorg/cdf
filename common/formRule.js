@@ -2,6 +2,8 @@ var fs = require('fs');
 //--------------------------把html表单转化成json对象--------------------------//
 var toRoles=function(html){
     var controls=[];
+    //html=html.replace('\r','');
+    //html=html.replace('\n','');
     //console.log(control['ng-minlength']);
     var pat=/<[^>]+ng\-model=['"]*(.*?)['"]*[^>]*>/g;
     var arrControl=html.match(pat);
@@ -19,19 +21,32 @@ var toRoles=function(html){
 
             if (!formatAttr) {
                 if (!rule.hasOwnProperty(arrAttr[j]))continue;
-                rule[arrAttr[j]]["value"] = arrAttr[j];
-                if(arrAttr[j]=="required")rule[arrAttr[j]]["msg"]=getMsg(name,arrAttr[j],msgs);
+                rule[arrAttr[j]].value = arrAttr[j];
+                if(arrAttr[j]=="required")rule[arrAttr[j]].msg=getMsg(name,arrAttr[j],msgs);
             }
             else {
-                if (!rule.hasOwnProperty(formatAttr[1]))continue;
                 if(formatAttr[1]=="type"){
-                    rule[formatAttr[1]]["value"] = formatAttr[2];
-                    rule[formatAttr[1]]["msg"]=getMsg(name,formatAttr[2],msgs);
+                    if(formatAttr[2]=="email"||formatAttr[2]=="number"||formatAttr[2]=="url"){
+                        rule[formatAttr[2]].value = formatAttr[2];
+                        rule[formatAttr[2]].msg=getMsg(name,formatAttr[2],msgs);
+                        continue;
+                    }
+                }
+                if(formatAttr[1]=="min" || formatAttr[1]=="max"){
+                    //rule["number"].value = "number";
+                    rule["number"][formatAttr[1]].value = formatAttr[2];
+                    rule["number"][formatAttr[1]].msg=getMsg(name,formatAttr[1],msgs);
                     continue;
                 }
 
-                rule[formatAttr[1]]["value"] = formatAttr[2];
-                rule[formatAttr[1]]["msg"]=getMsg(name,formatAttr[1],msgs);
+                if (!rule.hasOwnProperty(formatAttr[1]))continue;
+                 if(formatAttr[1]=="name" || formatAttr[1]=="ng-model"){
+                    rule[formatAttr[1]] = formatAttr[2];
+                    continue;
+                }
+
+                rule[formatAttr[1]].value = formatAttr[2];
+                rule[formatAttr[1]].msg=getMsg(name,formatAttr[1],msgs);
 
             }
 
@@ -48,17 +63,17 @@ var toRoles=function(html){
 */
 function ruleObject(){
     return {
-        "name":{"value":"","msg":""},
-        "ng-model":{"value":"","msg":""},
-        "type":{"value":"","msg":""},
-        "min":{"value":"","msg":""},
-        "max":{"value":"","msg":""},
+        "name":"",
         "required":{"value":"","msg":""},
+        "email":{"value":"","msg":""},
+        "number":{"value":"","msg":"",min:{"value":"","msg":""},max:{"value":"","msg":""}},
+        "url":{"value":"","msg":""},
         "ng-minlength":{"value":"","msg":""},
         "ng-maxlength":{"value":"","msg":""},
         "ng-pattern":{"value":"","msg":""},
         "ng-blur":{"value":"","msg":""},
-        "ng-click":{"value":"","msg":""}
+        "ng-click":{"value":"","msg":""},
+        "ng-model":""
     };
 }
 /*
@@ -79,8 +94,8 @@ var getMsgSet=function(html) {
     var m = html.match(reg);
     var obj={};
     for(i in m){
-
-        var r = /<[^\.]+\.([^\.]+)\.\$error\.([^\s\&"]+)[^>]+>(.*?)<[^>]+>/i;
+        var r = /<[^>]+\.([a-zA>]+)\.\$error\.([a-zA-Z]+)[^>]+>(.*?)<[^>]+>/i;
+        //var r = /<[^>]+\.\$error\.[^>]+>(.*?)<[^>]+>/i;
         var m2 = m[i].match(r);
         if(!m2)continue;
         obj[m2[1]+"."+m2[2]]=m2[3];
@@ -109,7 +124,8 @@ var fileToRoles=function(filename,callback){
             return {"msg":err};
         } else {
             console.time('RegEx');
-            callback(JSON.stringify(toRoles(file)));
+            //callback(JSON.stringify(toRoles(file)));
+            callback(toRoles(file));
             console.timeEnd('RegEx');
         }
 
