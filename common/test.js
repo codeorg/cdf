@@ -5,5 +5,6 @@ var set=function(val){
 var get=function(){
     return a;
 }
+
 exports.set = set;
 exports.get = get;

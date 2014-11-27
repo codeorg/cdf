@@ -153,6 +153,7 @@ app.get('/jq:id', function(req, res) {
     //ts.set("sssssssssssssssssss");
     console.log(ts2.get()+"-----------ts2");
 
+
     fr.fileToControls("test3.html",function(data){
         res.end(data);
     });
