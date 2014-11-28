@@ -1,4 +1,14 @@
 <form  name='codeorgForm'  novalidate  >
+
+    <!-- Number -->
+    <div class="form-group" ng-class="{ 'has-error' : codeorgForm.year.$invalid && !codeorgForm.year.$pristine }">
+        <label>年份</label>
+        <input  type="number" name="year" class="form-control" ng-model="user.year" required>
+
+        <p ng-show="(codeorgForm.year.$dirty || isPost ) && codeorgForm.year.$error.required && !codeorgForm.year.$error.number" class="help-block">remark is required.</p>
+        <p ng-show="(codeorgForm.year.$dirty || isPost) && codeorgForm.year.$error.number" class="help-block">number.</p>
+    </div>
+
     <!-- USERNAME -->
     <div class="form-group" ng-class="{ 'has-error' : codeorgForm.username.$invalid && !codeorgForm.username.$pristine }">
         <label>Username</label>

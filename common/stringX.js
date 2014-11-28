@@ -11,6 +11,9 @@ String.prototype.isRequired=function(){
 String.prototype.isEmail=function(){
     return false;
 }
+String.prototype.isNumber=function(min){
+  return /([0-9]+)(\.[0-9]+)?/.test(this);
+}
 String.prototype.isMin=function(min){
     if(!min||!min.isNumber()) return true;
     return this>=min;
@@ -31,7 +34,8 @@ String.prototype.isMaxlength=function(maxlength){
 
 String.prototype.isPattern=function(pat){
     if(!pat) return true;
-    return this.test(pat);
+    var reg = new RegExp(pat);
+    return reg.test(this);
 }
 
 

@@ -11,15 +11,17 @@ var validate=function(rules,data){
             _obj.msg="该数据为外部提交数据";
             return _obj;
         }
-        var _val=data[field];
+        var _val=data[field].toString();
         for(var attr in rule){
             if(typeof rule[attr]  === 'string')continue;
             if(!rule[attr].value)continue;
             if(rule[attr].value=="number"){
-                console.log(attr+"---------------------="+rule[attr]);
+                //console.log(attr+"---------------------="+rule[attr]);
+
                 if(!_val.isNumber())return{success:false,msg:rule[attr].msg};
                 if(_val.isMin(rule[attr].min.value))return{success:false,msg:rule[attr].min.msg};
                 if(_val.isMax(rule[attr].max.value))return{success:false,msg:rule[attr].max.msg};
+                continue;
             }
             else if(attr==rule[attr].value){
                //requried email url　三种情况
