@@ -53,9 +53,73 @@ app.get('/jq:id', function(req, res) {
         res.end(JSON.stringify(rule));
     });
 
+});
+//--------------------- mongous ----------------------------//
+//var $ = require("mongous").Mongous
+//$().open("127.0.0.1",27017);
+/*  $("codeorg.table").find({},function(r) {
+ console.log(r.documents);
+ });*/
 
+//---------------------- mongoskin ------------------------//
+/*var db = require('mongoskin').db('mongodb://localhost:27017/codeorg');
+db.collection('table').find({aaa:"aa"}).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+
+});*/
+
+var mongojs = require('mongojs');
+var db = mongojs('localhost:27017/codeorg',['table','user']);
+//var table = db.collection('table');
+app.get('/mg/:id', function(req, res) {
+    res.header("Content-Type", "text/html; charset=utf-8");
+    //db('table').find()
+
+
+    db.table.findAndModify({
+        query: { ssss: '111' },
+        sort: {bbb: -1},
+        update: { $set: { bbb:'ssssss' } },
+        new: true
+    }, function(err, doc, lastErrorObject) {
+        console.log(lastErrorObject);
+
+        // doc.tag === 'maintainer'
+    });
+
+    db.table.find({aaa:""},function(err, docs) {
+        //console.log(docs.length);
+
+
+
+
+        docs.forEach(function(value,index){
+            //console.log(index);
+
+            //console.log(value);
+            res.write(JSON.stringify(value));
+
+        })
+        res.end();
+
+    /*   for(d in docs){
+           console.log(docs[d]);
+       }
+*/
+       // res.end(docs)
+        //res.end(docs);
+        // docs is an array of all the documents in mycollection
+    });
+
+    db.collection('table').find(function(err, docs) {
+        //console.log(docs);
+        //res.end(docs);
+        // docs is an array of all the documents in mycollection
+    });
 
 });
+
 
 
 

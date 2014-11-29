@@ -48,7 +48,7 @@ test
 
 6.先要关闭mongodb. 这样每次启动MongoDB很不方便，我们可以像安装的MySQL一样，把它作为Windows服务，这样就方便多了。
 安装MongoDB的windows服务的方法为是在MongoDB安装目录下创建logs目录，然后在CMD命令行输入
-E:/mongodb/bin>mongod --logpath D:/mongodb/logs/mongodb.log --logappend --dbpath D:/mongodb/data/db --directoryperdb --serviceName MongoDB --install
+E:/mongodb/bin>mongod --logpath e:/mongodb/log/log.log --logappend --dbpath e:/mongodb/data --directoryperdb --serviceName MongoDB --install
 
 显示：
 
