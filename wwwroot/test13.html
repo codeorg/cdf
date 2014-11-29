@@ -1,0 +1,50 @@
+<!----隔离scope =
+
+= 通过directive的attr属性的值在局部scope的属性和父scope属性名之间建立双向绑定,无论是改变父scope还是隔离scope里的属性，
+父scope和隔离scope 都会同时更新属性值，因为它们是双向绑定的关系。---->
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/lib/ng/angular.js"></script>
+    <script src="/lib/ng/angular-route.min.js"></script>
+    <link rel="stylesheet" href="/lib/bs/css/bootstrap.min.css">
+</head>
+<body>
+<div class="result" ng-app="app" ng-view ng-controller="myController">
+    <div>父scope：
+        <div>Say：{{value}}</div>
+    </div>
+    <div>隔离scope：
+        <div isolated-directive action="click()"></div>
+    </div>
+
+</div>
+
+<script>
+    var  app =angular.module('app',[]);
+    app.run(function ($rootScope, $http) {
+
+    });
+    app.controller("myController", function ($scope) {
+        $scope.value = "hello world";
+        $scope.click = function () {
+            $scope.value = Math.random();
+        };
+    }).directive("isolatedDirective", function () {
+        return {
+            scope: {
+                action: "&"
+
+            },
+            template: '<input type="button" value="在directive中执行父scope定义的方法" ng-click="action()"/>'
+        }
+    })
+
+
+</script>
+
+</body>
+</html>
