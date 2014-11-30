@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/lib/bs/css/bootstrap.min.css">
+    <!--[if lt IE 9]>
+    <script src="/lib/html5/html5shiv.min.js"></script>
+    <script src="/lib/respond/respond.src.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <script src="/lib/ng/angular.min.js"></script>
+    <script src="/lib/ng/angular-resource.min.js"></script>
+
+<style>.red{color:red;}
+.red2{background: red}</style>
+    <title></title>
+</head>
+<body>
+<div  ng-app="app" ng-controller="add">
+
+    <ul ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+        <button ng-class="{red:$index==selectedindex}" ng-init="f=$index" ng-click="open($index)">{{alert.type}}{{$index}}</button>
+        <div ng-show="alert.open">
+        <a  ng-class="{red2:($index==selectedindex2 && f==myf )}"  href="#" ng-repeat="msg in alert.ccs" ng-click="open2(f,$index)">{{msg.msg}}--{{f}}</a>
+        </div>
+    </ul>
+
+    <a href="#" ng-model='email'>aaaa</a>
+    {{test}}
+</div>
+</body>
+<script>
+    var arr= [
+        { type: 'danger', ccs:[{msg:'aaaa'},{msg:'22222'}],open:true},
+        { type: 'success', ccs:[{msg:'bbbbb'},{msg:'33333'}],open:true},
+        { type: 'danger', ccs:[{msg:'aaaa'},{msg:'22222'}],open:true},
+        { type: 'success', ccs:[{msg:'bbbbb'},{msg:'33333'}],open:true}
+    ];
+    var  appM =angular.module("app", []);
+    appM.controller("add", [ "$scope" ,function($scope) {
+        $scope.selectedindex =0;
+        $scope.selectedindex2 =0;
+        $scope.myf=-1;
+        $scope.alerts =arr;
+        $scope.test="false";
+        $scope.open=function(i){
+            $scope.selectedindex =i;
+            $scope.alerts[i].open=!$scope.alerts[i].open;
+            //$scope.test=i;
+        }
+
+        $scope.open2=function(f,i){
+            $scope.selectedindex2 =i;
+            $scope.myf =f;
+            $scope.test=$scope.alerts[f].ccs[i].msg;
+            //$scope.alerts.remove(f);
+            //$scope.selectedindex =i;
+            //$scope.alerts[i].open=!$scope.alerts[i].open;
+            //$scope.test=i;
+        }
+        $scope.myclick=function(a){
+            $scope.test=a;
+        }
+
+    } ]);
+</script>
+</html>

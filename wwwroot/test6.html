@@ -63,6 +63,7 @@
     codeorgForm.$error : {{codeorgForm.$error}}<br />
     Return : {{isPost}}<br />
     Return : {{msg}}<br />
+        msg2 : {{msg2}}<br />
 </form>
 </div>
 <script>
@@ -75,12 +76,14 @@
 
     appM.controller("AddUserController", [ '$scope','Resource' ,function($scope,Resource) {
         $scope.isPost=false;
+        $scope.msg2="dataaaaaaaaaa";
         $scope.checkUser=function(){
             $scope.isPost=true;
         }
 
         $scope.addUser=function(){
             $scope.isPost=true;
+
             Resource.save({id:"ssssww"},$scope.user,function(data){
 
                 $scope.msg=data;

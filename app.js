@@ -18,6 +18,7 @@ var ts2= require("./common/test");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
+
     extended: true
 }));
 app.use(favicon(__dirname + '/wwwroot/favicon.ico'));
@@ -38,6 +39,7 @@ app.use(express.static(__dirname + '/wwwroot'));
 //app.use(express.static(__dirname + '/views'));
 
 app.get('/v0.10.33/:id',function(req,res,next){
+
     //..db get file realpath
     res.download(realpath,filename);
 });
