@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/lib/jquery/jquery-1.11.1.min.js"></script>
+    <script src="/lib/ng/angular.js"></script>
+    <script src="/lib/ng/angular-route.min.js"></script>
+    <link rel="stylesheet" href="/lib/bs/css/bootstrap.min.css">
+</head>
+<body>
+<div >
+    <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p>
+    <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p>
+    <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p>
+    <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p> <p>1</p>
+</div>
+
+<script>
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+
+        var scrollLeft = $(this).scrollLeft();
+        var scrollWidth = $(document).width();
+        var windowWidth = $(this).width();
+
+        if(scrollWidth<1000){alert(1221);}
+
+        if (scrollTop + windowHeight == scrollHeight) {
+        alert(11);
+            //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+
+//var page = Number($("#redgiftNextPage").attr('currentpage')) + 1;
+//redgiftList(page);
+//$("#redgiftNextPage").attr('currentpage', page + 1);
+
+        }
+    });
+</script>
+
+</body>
+</html>

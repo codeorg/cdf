@@ -78,7 +78,7 @@ app.get('/mg/:id', function(req, res) {
 
 
     db.table.findAndModify({
-        query: { ssss: '111' },
+        query: { sss: '111' },
         sort: {bbb: -1},
         update: { $set: { bbb:'ssssss' } },
         new: true
