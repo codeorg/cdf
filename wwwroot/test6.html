@@ -83,11 +83,17 @@
 
         $scope.addUser=function(){
             $scope.isPost=true;
-
-            Resource.save({id:"ssssww"},$scope.user,function(data){
+            Resource.get({id:"menu"},function(data){
+                alert(data);
+                console.log("data");
+                //$scope.items=data;
+            });
+            Resource.save({id:"menu"},$scope.user,function(data){
 
                 $scope.msg=data;
             })
+
+
 
             //var obj=$scope.user;
             //$scope.user={"name":"ssssssss"};

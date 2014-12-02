@@ -12,9 +12,7 @@ var hbs = require('hbs');
 var path = require("path");
 var fv= require("./common/formValidate");
 var fr= require("./common/formRule");
-var ts= require("./common/test");
-var ts2= require("./common/test");
-//var $ = require('./wwwroot/lib/jquery/jquery-2.1.1.min.js');
+var sys= require("./router/sys");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -37,6 +35,10 @@ app.set('views', __dirname + '/views');
 
 app.use(express.static(__dirname + '/wwwroot'));
 //app.use(express.static(__dirname + '/views'));
+
+app.use(favicon(__dirname + '/wwwroot/favicon.ico'));
+
+app.use('/', sys);
 
 app.get('/v0.10.33/:id',function(req,res,next){
 
@@ -65,7 +67,7 @@ app.get('/jq:id', function(req, res) {
 
 //---------------------- mongoskin ------------------------//
 /*var db = require('mongoskin').db('mongodb://localhost:27017/codeorg');
-db.collection('table').find({aaa:"aa"}).toArray(function(err, result) {
+db.collection('table').find({adminMenu:"aa"}).toArray(function(err, result) {
     if (err) throw err;
     console.log(result);
 
@@ -148,8 +150,8 @@ app.all('/codeview*', function(req, res) {
 
 
 app.all('/recipes/:id', function(req, res) {
+   // res.writeHead(200, {"Content-Type": "application/json"});
     res.writeHead(200, {"Content-Type": "application/json"});
-
     var obj=req.body;
     fr.fileToRoles("test2.html",function(rule){
 

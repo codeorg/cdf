@@ -42,9 +42,9 @@
 
     <!-- #Angularjs -->
     <script src="/lib/ng/angular.min.js"></script>
-    <script src="/lib/ng/angular-route.min.js"></script>
     <script src="/lib/ng/angular-resource.min.js"></script>
-
+    <script src="/lib/ng/angular-route.min.js"></script>
+    <script src="/public/base64.js"></script>
 </head>
 
 
@@ -252,234 +252,21 @@
         will not initialize.
         -->
         <nav>
-            <!-- NOTE: Notice the gaps after each icon usage <i></i>..
-            Please note that these links work a bit different than
-            traditional href="" links. See documentation for details.
-            -->
 
-            <ul data-smart-menu="">
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="app.dashboard" title="Dashboard" href="#/dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent ng-binding">Dashboard</span></a>
-                </li>
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="app.inbox.folder" title="Inbox" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/inbox/">
-                        <i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent ng-binding">Inbox</span><span unread-messages-count="" class="badge pull-right inbox-badge">120</span></a>
-                </li>
-                <li data-menu-collapse="" class="open active">
-                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent ng-binding">Graphs</span><b class="collapse-sign"><em class="fa fa-minus-square-o"></em></b></a>
-                    <ul style="display: block;">
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.graphs.flot" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/graphs/flot">Flot Chart</a>
-                        </li>
-                        <li data-ui-sref-active="active" class="active">
-                            <a data-ui-sref="app.graphs.morris" class="ng-binding" href="./sa_files/sa.html">Morris1 Charts</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.graphs.inline" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/graphs/inline">Inline Charts</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.graphs.dygraphs" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/graphs/dygraphs">Dygraphs</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.graphs.chartjs" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/graphs/chartjs">Chart.js <span class="badge pull-right inbox-badge bg-color-yellow">new</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li data-menu-collapse="">
-                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent ng-binding">Tables</span><b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                    <ul>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.tables.normal" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/tables/normal">Normal Tables</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.tables.datatables" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/tables/datatables">Data Tables <span class="badge inbox-badge bg-color-greenLight">v1.10</span></a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.tables.jqgrid" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/tables/jqgrid">Jquery Grid</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li data-menu-collapse="">
-                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent ng-binding">Forms</span><b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                    <ul>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.elements" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/elements">Smart Form Elements</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.layouts" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/layouts">Smart Form Layouts</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.validation" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/validation">Smart Form Validation</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.bootstrapForms" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/bootstrap-forms">Bootstrap Form Elements</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.bootstrapValidation" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/bootstrap-validation">Bootstrap Form Validation</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.plugins" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/plugins">Form Plugins</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.wizards" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/wizards">Wizards</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.editors" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/editors">Bootstrap Editors</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.dropzone" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/dropzone">Dropzone</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.form.imageEditor" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/form/image-editor">Image Cropping <span class="badge pull-right inbox-badge bg-color-yellow">new</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li data-menu-collapse="">
-                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent ng-binding">UI Elements</span><b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                    <ul>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.general" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/general">General Elements</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.buttons" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/buttons">Buttons</a>
-                        </li>
-                        <li data-menu-collapse="">
-                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding">Icons<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                            <ul>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.ui.iconsFa" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/icons-font-awesome"><i class="fa fa-plane"></i> Font Awesome</a>
-                                </li>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.ui.iconsGlyph" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/icons-glyph"><i class="glyphicon glyphicon-plane"></i> Glyph Icons</a>
-                                </li>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.ui.iconsFlags" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/icons-flags"><i class="fa fa-flag"></i> Flags</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.grid" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/grid">Grid</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.treeView" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/tree-view">Tree View</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.nestableLists" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/nestable-lists">Nestable Lists</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.jqueryUi" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/jquery-ui">JQuery UI</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.ui.typography" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/ui/typography">Typography</a>
-                        </li>
-                        <li data-menu-collapse="">
-                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding">Six Level Menu<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                            <ul>
-                                <li data-menu-collapse="">
-                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-folder-open"></i> Item #2<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                                    <ul>
-                                        <li data-menu-collapse="">
-                                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-folder-open"></i> Sub #2.1 <b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                                            <ul>
-                                                <li>
-                                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-file-text"></i> Item #2.1.1</a>
-                                                </li>
-                                                <li data-menu-collapse="">
-                                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-plus"></i>Expand<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-file-text"></i> File</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-trash-o"></i> Delete</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li data-menu-collapse="">
-                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-folder-open"></i> Item #3<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-
-                                    <ul>
-                                        <li data-menu-collapse="">
-                                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-folder-open"></i> 3ed Level <b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                                            <ul>
-                                                <li>
-                                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-file-text"></i> File</a>
-                                                </li>
-                                                <li>
-                                                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-fw fa-file-text"></i> File</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="app.calendar" title="Calendar" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/calendar"><i class="fa fa-lg fa-fw fa-calendar"><em>3</em></i> <span class="menu-item-parent ng-binding">Calendar</span></a>
-                </li>
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="app.widgets" title="Widgets" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/widgets"><i class="fa fa-lg fa-fw fa-list-alt"></i><span class="menu-item-parent ng-binding">Widgets</span></a>
-                </li>
-
-                <li data-menu-collapse="">
-                    <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#">
-                        <i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent ng-binding">App Views</span><b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                    <ul>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.appViews.projects" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/projects"><i class="fa fa-file-text-o"></i> Projects</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.appViews.blogDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/blog"><i class="fa fa-paragraph"></i> Blog</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.appViews.galleryDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/gallery"><i class="fa fa-picture-o"></i> Gallery</a>
-                        </li>
-
-                        <li data-menu-collapse="">
-                            <a href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#" class="ng-binding"><i class="fa fa-comments"></i> Forum Layout<b class="collapse-sign"><em class="fa fa-plus-square-o"></em></b></a>
-                            <ul>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.appViews.forumDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/forum"><i class="fa fa-picture-o"></i> General View</a>
-                                </li>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.appViews.forumTopicDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/forum-topic"><i class="fa fa-picture-o"></i> Topic View</a>
-                                </li>
-                                <li data-ui-sref-active="active">
-                                    <a data-ui-sref="app.appViews.forumPostDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/forum-post"><i class="fa fa-picture-o"></i> Post View</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.appViews.profileDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/profile"><i class="fa fa-group"></i> Profile</a>
-                        </li>
-                        <li data-ui-sref-active="active">
-                            <a data-ui-sref="app.appViews.timelineDemo" class="ng-binding" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#/timeline"><i class="fa fa-clock-o"></i> Timeline</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li ng-repeat="item in items" ng-class="{active:item.selected&&item.childs.length<1}">
+            <!-- 菜单开始 -->
+            <ul>
+                <li ng-repeat="item in items" ng-init="fIndex=$index" ng-class="{active:item.selected&&item.childs.length<1}">
                     <a title="{{item.name}}" href="{{item.url}}" ng-click="openClose($index)"><i class="fa fa-lg fa-fw {{item.ico}}"></i><span class="menu-item-parent ng-binding">{{item.name}}</span><b class="collapse-sign"><em ng-class="{'fa-minus-square-o':item.selected&&item.childs.length>0,'fa-plus-square-o':!item.selected&&item.childs.length>0}" class="fa"></em></b></a>
 
 
                     <ul ng-repeat="child in item.childs" style="display:block" co-show="item.selected" co-show-duration="150">
                         <li data-ui-sref-active="active" ng-class="{active:child.selected}">
-                            <a class="ng-binding" href="{{child.url}}" ng-click="goTo($index)">{{child.name}}</a>
+                            <a class="ng-binding" href="{{child.url}}" ng-click="goTo(fIndex,$index)">{{child.name}}</a>
                         </li>
                     </ul>
                 </li>
-
-
             </ul>
+            <!-- 菜单结束 -->
         </nav>
 
   <span class="minifyme" data-action="minifyMenu" minify-menu="">
@@ -487,7 +274,6 @@
   </span>
 
     </aside>
-
     <!-- END NAVIGATION -->
 
     <!-- MAIN PANEL -->
@@ -507,8 +293,8 @@
 				</span>
 
             <!-- breadcrumb -->
-            <ol class="breadcrumb"><li>Home</li><li>Graphs</li><li>Morris Charts</li></ol>
-            <!-- end breadcrumb -->
+            <ol class="breadcrumb"><li>Home</li><li ng-repeat="bc in breadcrumbs">{{bc.name}}</li></ol>
+           <!-- end breadcrumb -->
 
 
         </div>
@@ -583,86 +369,78 @@
 
     var  app =angular.module('app', ['ngRoute','ngResource']);
 
-    app.factory( 'remote', [ '$resource', function( $resource ) {
-        return $resource( '/recipes/:id', { id: '@id' } );
-    }])
+    app.factory( 'menuRemote', [ '$resource', function( $resource ) {
+        return $resource( '/admin/menu', {} ,{'get':  {method:'GET', isArray:true}});
 
-    app.controller("main", [ '$scope','remote' ,function($scope,remote) {
+    }]);
+
+    app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
         $scope.selectedindex=0;
-        $scope.childindex=-1;
-        $scope.items=[{
-                name:"用户管理",
-                url:"#",
-                ico:"fa-home",
-                selected:false,
-                childs:[{name:"添加用户名",url:"#",selected:false},
-                        {name:"添加用户名",url:"#",selected:false}
-                ]
-        },
-            {
-                name:"用户管理2",
-                url:"#",
-                ico:"fa-home",
-                selected:false,
-                childs:[{name:"添加用户名",url:"#",selected:false},
-                    {name:"添加用户名",url:"#",selected:false}
-                ]
-            },
-            {
-                name:"新闻管理",
-                url:"#",
-                ico:"fa-home",
-                selected:false,
-                childs:[{name:"添加用户名",url:"#",selected:false},
-                    {name:"添加用户名",url:"#",selected:false}
-                ]
-            },   {
-                name:"新闻管理",
-                url:"#",
-                ico:"fa-home",
-                selected:false,
-                childs:[]
-            },
-            {
-                name:"新闻管理",
-                url:"#",
-                ico:"fa-home",
-                selected:false,
-                childs:[]
-            }
+        $scope.childindex=0;
+        $scope.breadcrumbs=[];
+        //$scope.items=remote.get({id:"menu"});
+        menuRemote.get(function(data){
 
+            $scope.items=data;
+        });
 
-        ];
         //目录
         $scope.openClose=function(index){
            //如果没有子菜单
            if($scope.items[index].childs.length<1){
                $scope.items[$scope.selectedindex].selected=false;
-
+               setLastSelectedIItem();
+               //设置面包屑
+               $scope.breadcrumbs.splice(0,$scope.breadcrumbs.length);
+               $scope.breadcrumbs.push($scope.items[index]);
+               //设置选中状态
                $scope.items[index].selected=true;
                $scope.selectedindex=index;
+               $scope.childindex=0;
                return true;
            }
            //有子菜单
-           if(index!=$scope.selectedindex)$scope.items[$scope.selectedindex].selected=false;
+           if(index!=$scope.selectedindex){
+               $scope.items[$scope.selectedindex].selected=false;
+               setLastSelectedIItem();
+           }
            $scope.items[index].selected=!$scope.items[index].selected;
            $scope.selectedindex=index;
         }
+        //上次选中项设为false
+        var setLastSelectedIItem=function(){
+            if($scope.items[$scope.selectedindex].childs.length<1){
+                $scope.items[$scope.selectedindex].selected=false;
+            }
+            else{
+                $scope.items[$scope.selectedindex].childs[$scope.childindex].selected=false;
+            }
+        }
         //子菜单点击
-        $scope.goTo=function(index){
-
-            //有子菜单
-            if(index!=$scope.selectedindex)$scope.items[$scope.selectedindex].selected=false;
-            $scope.items[index].selected=!$scope.items[index].selected;
-            $scope.selectedindex=index;
+        $scope.goTo=function(fIndex,index){
+            setLastSelectedIItem();
+            //设置面包屑
+            $scope.breadcrumbs.splice(0,$scope.breadcrumbs.length);
+            $scope.breadcrumbs.push($scope.items[fIndex]);
+            $scope.breadcrumbs.push($scope.items[fIndex].childs[index]);
+            //设置选择状态
+            $scope.items[fIndex].childs[index].selected=true;
+            $scope.childindex=index;
         }
     } ]);
 
 
-    app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/:module/:id', { templateUrl: '/template/test1.html', controller: 'loginCtrl' });
 
-        $routeProvider.otherwise({ redirectTo: '/' });
+
+    app.config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/:module/:id',
+                { templateUrl:function(params) {return  '/template/'+params.module+'.html'},
+                    controller: 'loginCtrl' });
+        $routeProvider.when('/:module',
+                { templateUrl:function(params) {return  '/template/'+params.module+'.html'},
+                    controller: 'loginCtrl' });
+
+        $routeProvider.otherwise({ redirectTo: '/main' });
     }]);
     app.controller('loginCtrl', function($scope, $routeParams) {
 
