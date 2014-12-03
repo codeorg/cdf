@@ -4,6 +4,6 @@
 var path=require('path')
 
 module.exports = {
-    adminMenu:path.join(__dirname,'adminMenu.json'),
+    adminMenu:path.join(__dirname,'adminMenu.js'),
     configTpl:path.join(__dirname,'../wwwroot/template/admin/config.html')
 }

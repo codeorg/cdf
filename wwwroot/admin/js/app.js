@@ -5,14 +5,17 @@
 /**
  * 模块定义
  */
-var  app =angular.module('app', ['ngRoute','ngResource']);
-
+var  app =angular.module('app', ['ngRoute','ngResource','xeditable']);
+app.run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});
 /**
  * 远程菜单，数组必须指定数组，不然得不到data数组
  */
 app.factory( 'menuRemote', [ '$resource', function( $resource ) {
     return $resource( '/admin/menu', {} ,{'get':  {method:'GET', isArray:true}});
 }]);
+
 
 /**
  * admin/index页监视器,
@@ -95,9 +98,10 @@ app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
  * admin/index路由配置
  */
 app.config(['$routeProvider', function($routeProvider) {
-   var formartTpl=function(name){
-       return '/template/admin/'+name+'.html'
-   }
+    var formartTpl=function(name){
+        return '/template/admin/'+name+'.html'
+        //return '/template/admin/'+name+''
+    }
     $routeProvider
         .when('/:module/:id', { templateUrl:function(params) {return  '/template/admin/'+params.module+'.html'},controller: 'loginCtrl' })
         .when('/config',{ templateUrl:formartTpl('config'), controller:'config'})
@@ -105,12 +109,11 @@ app.config(['$routeProvider', function($routeProvider) {
 }]);
 
 
-
 /**
- * 页面监视器
- */
-app.controller('loginCtrl', function($scope, $routeParams) {
-    //$scope.isLoading=true;
+    * 页面监视器
+    */
+    app.controller('loginCtrl', function($scope, $routeParams) {
+        //$scope.isLoading=true;
     //$scope.id=$routeParams.id;
 
 });

@@ -1,0 +1,53 @@
+[
+    {
+        "name":"管理首页",
+        "url":"#/main",
+        "ico":"fa-home",
+        "selected":true,
+        "childs":[]
+    },
+    {
+        "name":"用户管理",
+        "url":"#",
+        "ico":"fa-home",
+        "selected":false,
+        "childs":[{"name":"test1","url":"#/test1/aaaa","selected":false},
+            {"name":"test1","url":"#/test1/ssssssssssss","selected":false}
+        ]
+    },
+    {
+        "name":"用户管理2",
+        "url":"#",
+        "ico":"fa-home",
+        "selected":false,
+        "childs":[{"name":"#/test2/aaa","url":"#/test2/aaa","selected":false},
+            {"name":"#/test2","url":"#/test2","selected":false}
+        ]
+    },
+    {
+        "name":"新闻管理",
+        "url":"#",
+        "ico":"fa-home",
+        "selected":false,
+        "childs":[{"name":"#/test3/aaa","url":"#/test3/aaa","selected":false},
+            {"name":"#/test3","url":"#/test3","selected":false}
+        ]
+    },
+    {
+        "name":"新闻管理",
+        "url":"#",
+        "ico":"fa-home",
+        "selected":false,
+        "childs":[]
+    },
+    {
+        "name":"高级管理",
+        "url":"#",
+        "ico":"fa-cog",
+        "selected":false,
+        "childs":[
+            {"name":"管理员管理","url":"#/manager","ico":"fa fa-user","selected":false},
+            {"name":"站点配置","url":"#/config","ico":"fa fa-legal","selected":false}
+        ]
+    }
+]
