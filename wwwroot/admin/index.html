@@ -17,15 +17,15 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/lib/fa/css/font-awesome.min.css">
 
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/admin1/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-production-plugins.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-production.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/admin1/css/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-skins.min.css">
 
     <!-- SmartAdmin AngularJS Fixes -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/admin1/css/fixes.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/fixes.css">
 
     <!-- SmartAdmin RTL Support (Not using RTL? Disable the CSS below to save bandwidth) -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/admin1/css/smartadmin-rtl.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-rtl.min.css">
 
     <!-- We recommend you use "your_style.css" to override SmartAdmin
     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
@@ -48,12 +48,12 @@
 </head>
 
 
-<body  class="desktop-detected">
+<body  ng-app="app" ng-controller="main" class="desktop-detected" ng-class="{'minified':leftMinified,'hidden-menu':leftMinimal}">
 
 <!-- ui-view container -->
 
 <!-- uiView: root -->
-<div class="ng-scope"  ng-app="app" ng-controller="main">
+<div class="ng-scope" >
     <!-- HEADER -->
     <header id="header" class="">
         <div id="logo-group">
@@ -102,7 +102,7 @@
 
                 <!-- footer: refresh area -->
    <span class="ng-binding"> Last updated on: 12/12/2013 9:43AM
-      <button type="button" data-loading-text="&lt;i class=&#39;fa fa-refresh fa-spin&#39;&gt;&lt;/i&gt; Loading..." class="btn btn-xs btn-default pull-right">
+      <button type="button" class="btn btn-xs btn-default pull-right">
           <i class="fa fa-refresh"></i>
       </button> 
       </span>
@@ -140,7 +140,7 @@
 
             <!-- collapse menu button -->
             <div id="hide-menu" class="btn-header pull-right">
-                <span> <a toggle-menu="" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                <span> <a ng-click="minimalMenu()" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
             </div>
             <!-- end collapse menu -->
 
@@ -208,7 +208,7 @@
                                 <small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
                             </h4>
                             <a href-void="" class="btn btn-success" id="speech-help-btn" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#">See Commands</a>
-                            <a href-void="" class="btn bg-color-purple txt-color-white" onclick="$(&#39;#speech-btn .popover&#39;).fadeOut(50);" href="http://192.241.236.31/themes/preview/smartadmin/1.5/angularjs/#">Close Popup</a>
+                            <a href-void="" class="btn bg-color-purple txt-color-white" >Close Popup</a>
                         </div>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
 
     <!-- Left panel : Navigation area -->
     <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-    <aside id="left-panel" class="">
+    <aside id="left-panel" class="" >
 
         <!-- User info -->
         <div login-info="">
@@ -260,7 +260,7 @@
 
 
                     <ul ng-repeat="child in item.childs" style="display:block" co-show="item.selected" co-show-duration="150">
-                        <li data-ui-sref-active="active" ng-class="{active:child.selected}">
+                        <li  ng-class="{active:child.selected}">
                             <a class="ng-binding" href="{{child.url}}" ng-click="goTo(fIndex,$index)">{{child.name}}</a>
                         </li>
                     </ul>
@@ -269,7 +269,7 @@
             <!-- 菜单结束 -->
         </nav>
 
-  <span class="minifyme" data-action="minifyMenu" minify-menu="">
+  <span class="minifyme" ng-click="minifyMenu()" >
     <i class="fa fa-arrow-circle-left hit"></i>
   </span>
 
@@ -278,43 +278,35 @@
 
     <!-- MAIN PANEL -->
     <div id="main" role="main" class="ng-scope" style="position: relative;">
-
-        <div class="demo"><span id="demo-setting"><i class="fa fa-refresh txt-color-blueDark"></i></span>
-
+        <!-- 刷新开始 -->
+        <div class="demo">
+            <span id="demo-setting"><i class="fa fa-refresh txt-color-blueDark"></i></span>
         </div>
-
-        <!-- RIBBON -->
+        <!-- 刷新结束 -->
+        <!-- 导航带 -->
         <div id="ribbon">
-
-				<span class="ribbon-button-alignment">
-					<span id="refresh" class="btn btn-ribbon ng-scope" reset-widgets="" tooltip-placement="bottom" tooltip-html-unsafe="&lt;i class=&#39;text-warning fa fa-warning&#39;&gt;&lt;/i&gt; Warning! This will reset all your widget settings.">
-						<i class="fa fa-home"></i>
-					</span>
-				</span>
-
-            <!-- breadcrumb -->
+            <!-- 导航home -->
+            <span class="ribbon-button-alignment">
+                <span id="refresh" class="btn btn-ribbon ng-scope" reset-widgets="" tooltip-placement="bottom" tooltip-html-unsafe="&lt;i class=&#39;text-warning fa fa-warning&#39;&gt;&lt;/i&gt; Warning! This will reset all your widget settings.">
+                    <i class="fa fa-home"></i>
+                </span>
+            </span>
+          　<!-- end 导航home -->
+            <!-- 面包屑 -->
             <ol class="breadcrumb"><li>Home</li><li ng-repeat="bc in breadcrumbs">{{bc.name}}</li></ol>
-           <!-- end breadcrumb -->
-
-
+            <!-- end 面包屑 -->
         </div>
-        <!-- END RIBBON -->
+        <!-- end 导航带 -->
 
-
-        <div  class="router-animation-container">
-            <!-- uiView: content --><div data-ui-view="content" data-autoscroll="false" class="ng-scope"><!-- MAIN CONTENT -->
-            <div id="content" class="ng-scope" ng-view>
-
-
-
-         <p>sssss</p>
-                <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p>
-                <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p>
-                <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p> <p>sssss</p>
+        <div  class="router-animation-container" ng  ng-class="{active:loading.value}">
+            <div data-ui-view="content" data-autoscroll="false" class="ng-scope">
+                <!-- 右侧主要内容 -->
+                <div id="content" class="ng-scope" ng-view></div>
+                <!-- end 右侧主要内容 -->
             </div>
-            <!-- END MAIN CONTENT -->
-        </div>
+            <!-- 加载loading -->
             <div class="router-animation-loader"><i class="fa fa-gear fa-4x fa-spin"></i></div>
+            <!-- end 加载loading -->
         </div>
 
     </div>
@@ -361,154 +353,7 @@
     </div>
 
     <!-- END PAGE FOOTER -->
-
-
 </div>
 </body>
-<script>
-
-    var  app =angular.module('app', ['ngRoute','ngResource']);
-
-    app.factory( 'menuRemote', [ '$resource', function( $resource ) {
-        return $resource( '/admin/menu', {} ,{'get':  {method:'GET', isArray:true}});
-
-    }]);
-
-    app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
-        $scope.selectedindex=0;
-        $scope.childindex=0;
-        $scope.breadcrumbs=[];
-        //$scope.items=remote.get({id:"menu"});
-        menuRemote.get(function(data){
-
-            $scope.items=data;
-        });
-
-        //目录
-        $scope.openClose=function(index){
-           //如果没有子菜单
-           if($scope.items[index].childs.length<1){
-               $scope.items[$scope.selectedindex].selected=false;
-               setLastSelectedIItem();
-               //设置面包屑
-               $scope.breadcrumbs.splice(0,$scope.breadcrumbs.length);
-               $scope.breadcrumbs.push($scope.items[index]);
-               //设置选中状态
-               $scope.items[index].selected=true;
-               $scope.selectedindex=index;
-               $scope.childindex=0;
-               return true;
-           }
-           //有子菜单
-           if(index!=$scope.selectedindex){
-               $scope.items[$scope.selectedindex].selected=false;
-               setLastSelectedIItem();
-           }
-           $scope.items[index].selected=!$scope.items[index].selected;
-           $scope.selectedindex=index;
-        }
-        //上次选中项设为false
-        var setLastSelectedIItem=function(){
-            if($scope.items[$scope.selectedindex].childs.length<1){
-                $scope.items[$scope.selectedindex].selected=false;
-            }
-            else{
-                $scope.items[$scope.selectedindex].childs[$scope.childindex].selected=false;
-            }
-        }
-        //子菜单点击
-        $scope.goTo=function(fIndex,index){
-            setLastSelectedIItem();
-            //设置面包屑
-            $scope.breadcrumbs.splice(0,$scope.breadcrumbs.length);
-            $scope.breadcrumbs.push($scope.items[fIndex]);
-            $scope.breadcrumbs.push($scope.items[fIndex].childs[index]);
-            //设置选择状态
-            $scope.items[fIndex].childs[index].selected=true;
-            $scope.childindex=index;
-        }
-    } ]);
-
-
-
-
-    app.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/:module/:id',
-                { templateUrl:function(params) {return  '/template/'+params.module+'.html'},
-                    controller: 'loginCtrl' });
-        $routeProvider.when('/:module',
-                { templateUrl:function(params) {return  '/template/'+params.module+'.html'},
-                    controller: 'loginCtrl' });
-
-        $routeProvider.otherwise({ redirectTo: '/main' });
-    }]);
-    app.controller('loginCtrl', function($scope, $routeParams) {
-
-        $scope.id=$routeParams.id;
-
-    });
-
-    /**
-     * co-show指令，实现jquery.show(time)效果
-     *
-     * 对应html标签属性co-show,co-show-duration
-     */
-    app.directive(
-            "coShow",
-            function() {
-                function link( $scope, element, attributes ) {
-
-                    // 设置监视属性.
-                    var expression = attributes.coShow;
-                    // 得到持续的时间（show(time)里的time，必须是数字）
-                    var duration = ( attributes.coShowDuration || 0 );
-                    duration=parseInt(duration);
-                    //初始化：执行co-show为flase时候隐藏
-                    if ( ! $scope.$eval( expression ) ) {
-                        element.hide();
-                    }
-
-                    //监视co-show的值有没有改变，当改变时改变相应元素的显示状态（显示、隐藏）
-                    $scope.$watch(
-                            expression,
-                            function( newValue, oldValue ) {
-                                // 第一次运行，不用改变其状态，它有默认状态
-                                // 没有改变时，退出
-                                if ( newValue === oldValue ) {  return; }
-
-                                // 有改变时
-                                if ( newValue ) {
-                                    //当co-show=true时，我们显示它
-                                    element
-                                            .stop( true, true )
-                                            .slideDown( duration )
-                                    ;
-                                } else {
-                                    //当co-show=false，我们隐藏它
-                                    element
-                                            .stop( true, true )
-                                            .slideUp( duration )
-                                    ;
-
-                                }
-
-                            }
-                    );
-
-                }
-                // 返回指令配置.
-                return({
-                    link: link,
-                    restrict: "A"
-                });
-
-            }
-    );
-
-
-
-</script>
-
-
-
+<script src="js/app.js?v=1"></script>
 </html>

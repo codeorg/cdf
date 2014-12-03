@@ -1,4 +1,6 @@
 var express = require('express');
+var session = require('express-session');
+var cookie=require('cookie-parser');
 require('./common/stringX')
 var bodyParser = require('body-parser');
 var app = express();
@@ -13,6 +15,9 @@ var path = require("path");
 var fv= require("./common/formValidate");
 var fr= require("./common/formRule");
 var sys= require("./router/sys");
+var user= require("./router/user");
+var admin= require("./router/admin");
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -37,8 +42,17 @@ app.use(express.static(__dirname + '/wwwroot'));
 //app.use(express.static(__dirname + '/views'));
 
 app.use(favicon(__dirname + '/wwwroot/favicon.ico'));
+app.use(cookie('test'));
+app.use(session({
+    secret: 'test',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
-app.use('/', sys);
+app.use(sys);//前台用的
+app.use(user);//用户中心
+app.use(admin);//后台管理
 
 app.get('/v0.10.33/:id',function(req,res,next){
 
