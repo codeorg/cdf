@@ -3,13 +3,11 @@
  */
 var express = require('express');
 var router = express.Router();
-var menu =  require('../bll/admin/menu.js');
-var popedom =  require('../bll/admin/popedom.js');
-var _configTpl =  require('../bll/admin/_tpl.js');
+var admin=require('../bll/admin');
 
-//router.all('/template/admin/config',_configTpl.get);
-router.all('/admin/', popedom.get);
-router.all('/admin/*', popedom.get);
-router.get('/admin/menu', menu.getMenu);//获取菜单
-
+router.all('/admin/', admin.popedom.get);
+router.all('/admin/*', admin.popedom.get);
+router.get('/admin/menu/', admin.menu.getMenu);//获取菜单
+router.get('/admin/config/web', admin.config.getWebConfig);//获取网站配置
+router.put('/admin/config/web',admin.config.updateWebConfig);
 module.exports = router;

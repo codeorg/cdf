@@ -5,22 +5,30 @@
 /**
  * 模块定义
  */
-var  app =angular.module('app', ['ngRoute','ngResource','xeditable']);
+var  app =angular.module('app', ['ngRoute','ngResource','xeditable','ui.bootstrap']);
 app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
 /**
- * 远程菜单，数组必须指定数组，不然得不到data数组
+ * 远程Ajax请求，数组用query,get只能拿到单个对象
+ * { 'get':    {method:'GET'},
+  'save':   {method:'POST'},
+  'query':  {method:'GET', isArray:true},
+  'remove': {method:'DELETE'},
+  'delete': {method:'DELETE'}
+};
  */
-app.factory( 'menuRemote', [ '$resource', function( $resource ) {
-    return $resource( '/admin/menu', {} ,{'get':  {method:'GET', isArray:true}});
+app.factory( 'remote', [ '$resource', function( $resource ) {
+    return $resource( '/admin/:module/:id', {module:'@module',id:'@id'} ,{
+        'update':{method:'PUT'},
+        'insert':{method:'POST'}
+    });
 }]);
-
 
 /**
  * admin/index页监视器,
  */
-app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
+app.controller("main", [ '$scope','remote','$location' ,function($scope,remote,$location) {
     //菜单缩小，只省下图标
     $scope.leftMinified=false;
     //菜单极小，但还是有点
@@ -32,8 +40,7 @@ app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
     //加载图标
     $scope.loading={value:false};
     //$scope.items=remote.get({id:"menu"});
-    menuRemote.get(function(data){
-
+    remote.query({module:'menu'},function(data){
         $scope.items=data;
     });
 
@@ -82,7 +89,11 @@ app.controller("main", [ '$scope','menuRemote' ,function($scope,menuRemote) {
     //子菜单点击
     $scope.goTo=function(fIndex,index){
         //不为自己的时候，添加加载
-        if(!($scope.selectedindex==fIndex&&$scope.childindex==index)) $scope.loading.value=true;
+        //alert($location.path())
+        var url=$scope.items[fIndex].childs[index].url;
+        if(!($scope.selectedindex==fIndex&&$scope.childindex==index)) {
+            if(url!="#"+$location.path()) $scope.loading.value = true;
+        }
         setLastSelectedIItem();
         //设置面包屑
         $scope.breadcrumbs.splice(0,$scope.breadcrumbs.length);
@@ -103,8 +114,10 @@ app.config(['$routeProvider', function($routeProvider) {
         //return '/template/admin/'+name+''
     }
     $routeProvider
+        .when('/main',{ templateUrl:formartTpl('main'), controller:'main'})
         .when('/:module/:id', { templateUrl:function(params) {return  '/template/admin/'+params.module+'.html'},controller: 'loginCtrl' })
         .when('/config',{ templateUrl:formartTpl('config'), controller:'config'})
+
         .otherwise({ redirectTo: '/main' });
 }]);
 
@@ -117,16 +130,30 @@ app.config(['$routeProvider', function($routeProvider) {
     //$scope.id=$routeParams.id;
 
 });
+
+/**
+ * Main页面监视器
+ */
+app.controller('loginCtrl', function($scope, $routeParams) {
+    $scope.loaded=function(){
+        $scope.loading.value=false;
+    }
+
+});
 /**
  * config，配置管理页面
  */
-app.controller('config', function($scope, $routeParams) {
+app.controller('config', [ '$scope','remote',function($scope,remote) {
+    remote.get({module:'config',id:'web'},function(data){
+        $scope.config=data;
+    });
+
+
+    $scope.fullScreen={id:"",isFull:false,title:"全屏"}
     $scope.user = {
         id: 1,
         name: 'awesome userffffffffffffffffffffff'
     };
-
-
     $scope.loaded=function(){
         $scope.loading.value=false;
     }
@@ -134,7 +161,35 @@ app.controller('config', function($scope, $routeParams) {
         alert(data);
         //$scope.loading.value=false;
     }
-});
+    //缩放配置屏
+    $scope.zoomScreen=function(){
+        if($scope.fullScreen.isFull){
+            $scope.fullScreen={id:"",isFull:false,title:"全屏"}
+        }else {
+            $scope.fullScreen={id:"jarviswidget-fullscreen-mode",isFull:true,title:"恢复正常大小"}
+        }
+    }
+
+    $scope.updateConfig=function(key,value){
+        var val;
+        if(typeof value!='undefined'){
+            //数据没改变时退出
+            if(value==$scope.config[key]) return;
+            val=value;
+        }
+        else{
+            //没传$data
+            val=$scope.config[key];
+        }
+
+        var obj={};
+        obj[key]=val;
+        remote.update({module:'config',id:'web'},obj,function(data){
+            $scope.msg=data;
+        });
+    }
+
+}]);
 
 
 /**

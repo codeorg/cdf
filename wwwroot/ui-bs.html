@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html  ng-app="ui.bootstrap.demo" >
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/bs/css/bootstrap.min.css">
+    <!-- #Angularjs -->
+    <script src="/lib/ng/angular.min.js"></script>
+    <script src="/lib/ng/angular-resource.min.js"></script>
+    <script src="/lib/ng/angular-route.min.js"></script>
+    <script src="/lib/ng/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <title></title>
+</head>
+<body ng-controller="CollapseDemoCtrl">
+<div>
+<!-- 最大化，最小化按键 -->
+<a href="#" class="button-icon jarviswidget-fullscreen-btn" tooltip="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa我在在在"  tooltip-placement="bottom"><i class="fa">aa</i></a>
+<!-- end 最大化，最小化按键 -->
+{{fullScreen.title}}
+
+
+    <div>
+        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
+        <hr>
+        <div collapse="isCollapsed">
+            <div class="well well-lg">Some content</div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var app= angular.module('ui.bootstrap.demo', ['ui.bootstrap']);
+    app.controller('CollapseDemoCtrl', function ($scope) {
+        $scope.isCollapsed = true;
+    });
+</script>
+</html>

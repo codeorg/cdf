@@ -17,9 +17,9 @@ exports.getMenu = function (req, res) {
         if (err) {
             res.end('{msg:"err"}');
         } else {
-            console.time('adminMenu');
+            //console.time('adminMenu');
             res.end(file);
-            console.timeEnd('adminMenu');
+            //console.timeEnd('adminMenu');
         }
 
     });

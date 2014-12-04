@@ -35,14 +35,13 @@
     },
     {
         "name":"新闻管理",
-        "url":"#",
+        "url":"#/news",
         "ico":"fa-home",
         "selected":false,
         "childs":[]
     },
     {
         "name":"高级管理",
-        "url":"#",
         "ico":"fa-cog",
         "selected":false,
         "childs":[

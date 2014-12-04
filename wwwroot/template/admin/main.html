@@ -1,0 +1,20 @@
+<form  name='codeorgForm' ng-init="loaded()"  novalidate  >
+    {{id}}
+    <div class="form-group"
+         ng-class='{ "has-error" : codeorgForm.text1.$invalid && (codeorgForm.text1.$dirty || isPost)}'>
+        <label class="col-sm-3 control-label text-right" >Text</label>
+        <div class="col-sm-9" >
+        <input type="text" name="text1" class="form-control" value="(dsdsfdsf)" ng-model="db.text1"  required ng-pattern="/^[A-Za-z0-9]+$/" ng-blur="checkUser()">
+        <p ng-show="codeorgForm.text1.$error.required && (codeorgForm.text1.$dirty || isPost)" class="help-block">您输入的不能为空aaaaaaaaaaaaaaaaaaaaaaaa</p>
+        <p ng-show="codeorgForm.text1.$error.pattern && (codeorgForm.text1.$dirty || isPost)" class="help-block">必须是：A-Za-z0-9</p></div>
+    </div>
+
+    <div class="form-group"
+         ng-class='{ "has-error" : codeorgForm.text2.$invalid && (codeorgForm.text2.$dirty || isPost)}'>
+        <label class="col-sm-3 control-label text-right" >Text</label>
+        <div class="col-sm-9" >
+            <input type="text2" name="text2" class="form-control" value="11222222222" ng-model="db.text2"  required ng-pattern="2222" ng-blur="checkUser2()">
+            <p ng-show="codeorgForm.text2.$error.required && (codeorgForm.text2.$dirty || isPost)" class="help-block">bbbbbbbbbbbbbbbbbb</p>
+            <p ng-show="codeorgForm.text1.$error.pattern && (codeorgForm.text2.$dirty || isPost)" class="help-block">必须是：A-Za-z0-9</p></div>
+    </div>
+</form>

@@ -43,6 +43,7 @@
     <script src="/lib/ng/angular.min.js"></script>
     <script src="/lib/ng/angular-resource.min.js"></script>
     <script src="/lib/ng/angular-route.min.js"></script>
+    <script src="/lib/ng/ui-bootstrap-tpls-0.12.0.min.js"></script>
 
     <!-- #X-Editable -->
     <script src="/lib/xe/js/xeditable.min.js"></script>
@@ -257,14 +258,15 @@
             <!-- 菜单开始 -->
             <ul>
                 <li ng-repeat="item in items" ng-init="fIndex=$index" ng-class="{active:item.selected&&item.childs.length<1}">
-                    <a title="{{item.name}}" href="{{item.url}}" ng-click="openClose($index)"><i class="fa fa-lg fa-fw {{item.ico}}"></i><span class="menu-item-parent ng-binding">{{item.name}}</span><b class="collapse-sign"><em ng-class="{'fa-minus-square-o':item.selected&&item.childs.length>0,'fa-plus-square-o':!item.selected&&item.childs.length>0}" class="fa"></em></b></a>
+                    <a title="{{item.name}}" ng-href="{{item.url}}" ng-click="openClose($index)"><i class="fa fa-lg fa-fw {{item.ico}}"></i><span class="menu-item-parent ng-binding">{{item.name}}</span><b class="collapse-sign"><em ng-class="{'fa-minus-square-o':item.selected&&item.childs.length>0,'fa-plus-square-o':!item.selected&&item.childs.length>0}" class="fa"></em></b></a>
 
-
+<span>
                     <ul ng-repeat="child in item.childs" style="display:block" co-show="item.selected" co-show-duration="150">
                         <li  ng-class="{active:child.selected}">
                             <a class="ng-binding" href="{{child.url}}" ng-click="goTo(fIndex,$index)"><i class="{{child.ico}}"></i>{{child.name}}</a>
                         </li>
                     </ul>
+    </span>
                 </li>
             </ul>
             <!-- 菜单结束 -->
