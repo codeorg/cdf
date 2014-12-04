@@ -121,13 +121,18 @@ app.config(['$routeProvider', function($routeProvider) {
  * config，配置管理页面
  */
 app.controller('config', function($scope, $routeParams) {
-    //$scope.id=$routeParams.id;
+    $scope.user = {
+        id: 1,
+        name: 'awesome userffffffffffffffffffffff'
+    };
 
-    $scope.test=function(){
+
+    $scope.loaded=function(){
         $scope.loading.value=false;
     }
-    $scope.addUser=function(){
-        $scope.loading.value=false;
+    $scope.updateUser=function(data){
+        alert(data);
+        //$scope.loading.value=false;
     }
 });
 
