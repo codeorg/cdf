@@ -2,12 +2,18 @@
 <html ng-app="AbnTest">
 <head lang="en">
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" media="screen" href="/lib/bs/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/bs/css/bootstrap.min.3.3.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/lib/tree/abn_tree.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/xe/css/xeditable.css">
     <!-- #Angularjs -->
     <script src="/lib/ng/angular.min.js"></script>
     <script src="/lib/ng/angular-animate.min.js"></script>
     <script src="/lib/tree/abn_tree_directive.js"></script>
+    <!-- #X-Editable -->
+    <script src="/lib/xe/js/xeditable.min.js"></script>
+
+
+
     <title></title>
 </head>
   <body ng-controller="AbnTestController" style="margin:20px">
@@ -67,11 +73,13 @@
                         <hr>
                         <button ng-click="try_adding_a_branch()" class="btn btn-default btn-sm">Add Branch</button>
                         <button ng-click="my_tree.moveup()" class="btn btn-default btn-sm">向上移动</button>
+                        <button ng-click="my_tree.movedown()" class="btn btn-default btn-sm">向下移动</button>
+                   <a href="javascript:void(0)" onbeforesave="updateConfig('slogan',$data)" editable-text="config.slogan" class="editable editable-click"> {{ config.slogan || 'empty' }}</a>
                     </td>
                     <td style="vertical-align:top">
                         <div style="width:250px;margin-left:100px;background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
                             <span ng-if="doing_async">...loading...</span>
-                            <abn-tree tree-data="my_data" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="1" init-selected-value="111"></abn-tree>
+                            <abn-tree tree-data="my_data"  tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="1" init-selected-value="111"></abn-tree>
                         </div>
                     </td>
                     <td style="padding:20px;vertical-align:top;">
@@ -87,19 +95,21 @@
     (function() {
         var app, deps;
 
-        deps = ['angularBootstrapNavTree'];
+        deps = ['angularBootstrapNavTree','xeditable'];
 
         if (angular.version.full.indexOf("1.2") >= 0) {
             deps.push('ngAnimate');
         }
 
         app = angular.module('AbnTest', deps);
-
+        app.run(function(editableOptions) {
+            editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+        });
         app.controller('AbnTestController', function($scope, $timeout) {
             var apple_selected, tree, treedata_avm, treedata_geography;
             $scope.my_tree_handler = function(branch) {
                 var _ref;
-                $scope.output = "You selected: " + branch.label;
+                $scope.output = "You selected: " + branch.name;
                 if ((_ref = branch.data) != null ? _ref.description : void 0) {
                     return $scope.output += '(' + branch.data.description + ')';
                 }
@@ -110,30 +120,30 @@
             };
             treedata_avm = [
                 {
-                    label: 'Animal',
+                    name: 'Animal',
                     children: [
                         {
-                            label: 'Dog',
+                            name: 'Dog',
                             data: {
                                 description: "man's best friend"
                             }
                         }, {
-                            label: 'Cat',
+                            name: 'Cat',
                             data: {
                                 description: "Felis catus"
                             }
                         }, {
-                            label: 'Hippopotamus',
+                            name: 'Hippopotamus',
                             data: {
                                 description: "hungry, hungry"
                             }
                         }, {
-                            label: 'Chicken',
+                            name: 'Chicken',
                             children: ['White Leghorn', 'Rhode Island Red', 'Jersey Giant']
                         }
                     ]
                 }, {
-                    label: 'Vegetable',
+                    name: 'Vegetable',
                     data: {
                         definition: "A plant or part of a plant used as food, typically as accompaniment to meat or fish, such as a cabbage, potato, carrot, or bean.",
                         data_can_contain_anything: true
@@ -143,40 +153,40 @@
                     },
                     children: [
                         {
-                            label: 'Oranges'
+                            name: 'Oranges'
                         }, {
-                            label: 'Apples',
+                            name: 'Apples',
                             children: [
                                 {
-                                    label: 'Granny Smith',
+                                    name: 'Granny Smith',
                                     onSelect: apple_selected
                                 }, {
-                                    label: 'Red Delicous',
+                                    name: 'Red Delicous',
                                     onSelect: apple_selected
                                 }, {
-                                    label: 'Fuji',value:'111',
+                                    name: 'Fuji',value:'111',
                                     onSelect: apple_selected
                                 }
                             ]
                         }
                     ]
                 }, {
-                    label: 'Mineral',
+                    name: 'Mineral',
                     children: [
                         {
-                            label: 'Rock',
+                            name: 'Rock',
                             children: ['Igneous', 'Sedimentary', 'Metamorphic']
                         }, {
-                            label: 'Metal',
+                            name: 'Metal',
                             children: ['Aluminum', 'Steel', 'Copper']
                         }, {
-                            label: 'Plastic',
+                            name: 'Plastic',
                             children: [
                                 {
-                                    label: 'Thermoplastic',
+                                    name: 'Thermoplastic',
                                     children: ['polyethylene', 'polypropylene', 'polystyrene', ' polyvinyl chloride']
                                 }, {
-                                    label: 'Thermosetting Polymer',
+                                    name: 'Thermosetting Polymer',
                                     children: ['polyester', 'polyurethane', 'vulcanized rubber', 'bakelite', 'urea-formaldehyde']
                                 }
                             ]
@@ -186,30 +196,30 @@
             ];
             treedata_geography = [
                 {
-                    label: 'North America',
+                    name: 'North America',
                     children: [
                         {
-                            label: 'Canada',
+                            name: 'Canada',
                             children: ['Toronto', 'Vancouver']
                         }, {
-                            label: 'USA',
+                            name: 'USA',
                             children: ['New York', 'Los Angeles']
                         }, {
-                            label: 'Mexico',
+                            name: 'Mexico',
                             children: ['Mexico City', 'Guadalajara']
                         }
                     ]
                 }, {
-                    label: 'South America',
+                    name: 'South America',
                     children: [
                         {
-                            label: 'Venezuela',
+                            name: 'Venezuela',
                             children: ['Caracas', 'Maracaibo']
                         }, {
-                            label: 'Brazil',
+                            name: 'Brazil',
                             children: ['Sao Paulo', 'Rio de Janeiro']
                         }, {
-                            label: 'Argentina',
+                            name: 'Argentina',
                             children: ['Buenos Aires', 'Cordoba']
                         }
                     ]
@@ -241,7 +251,7 @@
                 var b;
                 b = tree.get_selected_branch();
                 return tree.add_branch(b, {
-                    label: 'New Branch',
+                    name: 'New Branch',
                     data: {
                         something: 42,
                         "else": 43

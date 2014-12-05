@@ -15,6 +15,7 @@ The first selector is for Angular 1.1.5
 The second selector is for Angular 1.2.0
 
 */
+
 .abn-tree-animate-enter,
 li.abn-tree-row.ng-enter {
   transition: 200ms linear all;
@@ -119,3 +120,10 @@ ul.nav.nav-list.abn-tree .level-9 .indented {
   position: relative;
   left: 160px;
 }
+.sellss form{position:absolute;left: 40px;}
+.aaa{clear:both;padding: 0;margin: 0; float: left;line-height: 0;position: relative;border: 1px solid #000;}
+
+.editable-1 form{position:absolute;left: 30px;top:-3px;}
+.editable-2 form{position:absolute;left: 50px;top:-3px;}
+.editable-3 form{position:absolute;left: 70px;top:-3px;}
+.active .activespan{color:#ffffff;}

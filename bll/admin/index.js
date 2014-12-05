@@ -4,3 +4,4 @@
 exports.menu =require('./menu');
 exports.config =require('./config');
 exports.popedom =require('./popedom');
+exports.category =require('./category');

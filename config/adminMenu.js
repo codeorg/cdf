@@ -40,7 +40,7 @@
         "childs":[
             {"name":"管理员管理","url":"#/manager","ico":"fa fa-user","selected":false},
             {"name":"站点配置","url":"#/config","ico":"fa fa-legal","selected":false},
-            {"name":"分类管理","url":"#/class","ico":"fa fa-sitemap","selected":false}
+            {"name":"分类管理","url":"#/category","ico":"fa fa-sitemap","selected":false}
         ]
     }
 ]

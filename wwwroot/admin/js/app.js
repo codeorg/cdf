@@ -5,7 +5,7 @@
 /**
  * 模块定义
  */
-var  app =angular.module('app', ['ngRoute','ngResource','xeditable','ui.bootstrap']);
+var  app =angular.module('app', ['ngRoute','ngResource','xeditable','ui.bootstrap','angularBootstrapNavTree']);
 app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
@@ -111,16 +111,13 @@ app.controller("main", [ '$scope','remote','$location' ,function($scope,remote,$
  * admin/index路由配置
  */
 app.config(['$routeProvider', function($routeProvider) {
-    var formartTpl=function(name){
-        return '/template/admin/'+name+'.html'
-        //return '/template/admin/'+name+''
-    }
-    $routeProvider
-        .when('/main',{ templateUrl:formartTpl('main'), controller:'main'})
-        .when('/:module/:id', { templateUrl:function(params) {return  '/template/admin/'+params.module+'.html'},controller: 'loginCtrl' })
-        .when('/config',{ templateUrl:formartTpl('config'), controller:'config'})
-
-        .otherwise({ redirectTo: '/main' });
+    var formartTpl=function(name){ return '/template/admin/'+name+'.html'}
+    var moudles=['main','config','category'];
+    moudles.forEach(function(moudle){
+        $routeProvider.when('/'+moudle,{ templateUrl:formartTpl(moudle), controller:moudle});
+    });
+    $routeProvider.when('/category/:id',{ templateUrl:formartTpl('category'), controller:'category'});
+    $routeProvider .otherwise({ redirectTo: '/main' });
 }]);
 
 
@@ -149,18 +146,9 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
     remote.get({module:'config',id:'web'},function(data){
         $scope.config=data;
     });
-
-
     $scope.fullScreen={id:"",isFull:false,title:"全屏",height:''}
-    $scope.user = {
-        id: 1,
-        name: 'awesome userffffffffffffffffffffff'
-    };
 
-    $scope.updateUser=function(data){
-        alert(data);
-        //$scope.loading.value=false;
-    }
+
     //缩放配置屏
     $scope.zoomScreen=function(){
         if($scope.fullScreen.isFull){
@@ -191,6 +179,48 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
 
 }]);
 
+/**
+ * category，配置管理页面
+ */
+app.controller('category', [ '$scope','remote','$routeParams',function($scope,remote,$routeParams){
+    $scope.my_data =[ {
+        module: 'news',
+        name: 'kakall',
+        parent: '0',
+        id: 'a1',
+        children: ['White Leghorn', 'Rhode Island Red', 'Jersey Giant'],
+        sort: '0' },
+        {
+            module: 'news',
+            name: 'dsfsfs',
+            parent: '0',
+            id: 'a2',
+            sort: '1' } ];
+    remote.query({module:'config',id:'category'},function(data){
+        if(!data||data.length==0)return;
+        $scope.categorys=data;
+
+        if(!$routeParams.id)
+            $scope.selectedValue=$scope.categorys[0].value;
+        else
+            $scope.selectedValue=$routeParams.id;
+        getCategoryByMoudleId($scope.selectedValue);
+    });
+
+    $scope.categoryClick=function(c){
+        $scope.selectedValue= c.value;
+        getCategoryByMoudleId($scope.selectedValue);
+    }
+    function getCategoryByMoudleId(val){
+        remote.query({module:'category',id:val},function(data){
+           // $scope.my_data = data;
+            //alert(data)
+        })
+    }
+
+
+
+}]);
 
 /**
  * co-show指令，实现jquery.show(time)效果

@@ -1,0 +1,154 @@
+<style>
+    /*
+   abn-tree.css
+
+   style for the angular-bootstrap-nav-tree
+   for both Bootstrap 2 and Bootstrap 3
+
+*/
+
+
+
+    /* ------------------------------------------
+    AngularJS Animations...
+
+    The first selector is for Angular 1.1.5
+    The second selector is for Angular 1.2.0
+
+    */
+
+    .abn-tree-animate-enter,
+    li.abn-tree-row.ng-enter {
+        transition: 200ms linear all;
+        position: relative;
+        display: block;
+        opacity: 0;
+        max-height:0px;
+    }
+    .abn-tree-animate-enter.abn-tree-animate-enter-active,
+    li.abn-tree-row.ng-enter-active{
+        opacity: 1;
+        max-height:30px;
+    }
+
+    .abn-tree-animate-leave,
+    li.abn-tree-row.ng-leave {
+        transition: 200ms linear all;
+        position: relative;
+        display: block;
+        height:30px;
+        max-height: 30px;
+        opacity: 1;
+    }
+    .abn-tree-animate-leave.abn-tree-animate-leave-active,
+    li.abn-tree-row.ng-leave-active {
+        height: 0px;
+        max-height:0px;
+        opacity: 0;
+    }
+
+
+    /*
+    ------------------------------------------
+    Angular 1.2.0 Animation
+    */
+
+
+    .abn-tree-animate.ng-enter{
+
+    }
+    .abn-tree-animate.ng-enter{
+
+    }
+
+
+
+
+    /*
+       end animation stuff
+    -----------------------------------------
+       begin normal css stuff
+    */
+    ul.abn-tree li.abn-tree-row {
+        padding: 0px;
+        margin:0px;
+    }
+
+    ul.abn-tree li.abn-tree-row a {
+        padding: 3px 10px;
+    }
+
+    ul.abn-tree i.indented {
+        padding: 2px;
+    }
+
+    .abn-tree {
+        cursor: pointer;
+    }
+    ul.nav.abn-tree .level-1 .indented {
+        position: relative;
+        left: 0px;
+    }
+    ul.nav.abn-tree .level-2 .indented {
+        position: relative;
+        left: 20px;
+    }
+    ul.nav.abn-tree .level-3 .indented {
+        position: relative;
+        left: 40px;
+    }
+    ul.nav.abn-tree .level-4 .indented {
+        position: relative;
+        left: 60px;
+    }
+    ul.nav.abn-tree .level-5 .indented {
+        position: relative;
+        left: 80px;
+    }
+    ul.nav.abn-tree .level-6 .indented {
+        position: relative;
+        left: 100px;
+    }
+    ul.nav.nav-list.abn-tree .level-7 .indented {
+        position: relative;
+        left: 120px;
+    }
+    ul.nav.nav-list.abn-tree .level-8 .indented {
+        position: relative;
+        left: 140px;
+    }
+    ul.nav.nav-list.abn-tree .level-9 .indented {
+        position: relative;
+        left: 160px;
+    }
+    .sellss form{position:absolute;left: 40px;}
+    .aaa{clear:both;padding: 0;margin: 0; float: left;line-height: 0;position: relative;border: 1px solid #000;}
+
+    .editable-1 form{position:absolute;left: 30px;top:-3px;z-index:9999;}
+    .editable-2 form{position:absolute;left: 50px;top:-3px;z-index:9999;}
+    .editable-3 form{position:absolute;left: 70px;top:-3px;z-index:9999;}
+    .active .activespan{color:#ffffff;}
+    .marg{margin-top: 10px}
+</style>
+        <div ng-init="loading.value=false">
+<div class="col-sm-3">
+    <div class="list-group">
+        <a href="javascript:void(0)" ng-click="categoryClick(item)" ng-repeat="item in categorys" ng-class="{active:selectedValue==item.value}" class="list-group-item">{{item.name}}</a>
+    </div>
+</div>
+<div class="col-sm-3">
+    <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
+        <span ng-if="doing_async">...loading...</span>
+        <abn-tree tree-data="my_data"  tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="1" init-selected-value="111"></abn-tree>
+    </div>
+</div>
+
+<div class="col-sm-5">
+    <button ng-click="try_adding_a_branch()" class="btn btn-primary btn-large fa fa-plus"> 添加分类</button><br>
+    <button ng-click="my_tree.moveup()" class="btn btn-primary btn-large fa fa-arrow-up marg"> 向上移动</button><br>
+    <button ng-click="my_tree.movedown()" class="btn btn-primary btn-large fa fa-arrow-down marg"> 向下移动</button><br>
+
+</div>
+
+        </div>
+

@@ -3,17 +3,7 @@
  */
 var db = require('../../common/db.js');
 
-/**
- * 得到网站配置
- */
-exports.getWeb = function (req, res) {
-    db.config.findOne({_id:1},function(err,doc){
-        if(err)res.end({err:false});
-            res.writeHead(200, {"Content-Type": "application/json"});
-        //console.log(doc)
-            res.end(JSON.stringify(doc));
-    })
-};
+
 exports.updateWeb = function (req, res) {
     db.config.findAndModify({
         query: { _id: 1 },
@@ -27,10 +17,10 @@ exports.updateWeb = function (req, res) {
 };
 
 /**
- * 得到分类配置
+ * 分类一级分类
  */
-exports.getCategory = function (req, res) {
-    db.config.find({moudle:"category"},function(err,docs){
+exports.getFirst = function (req, res) {
+    db.category.find({moudle:req.params.id},function(err,docs){
         if(err)res.end({err:false});
         res.writeHead(200, {"Content-Type": "application/json"});
         console.log(docs)
