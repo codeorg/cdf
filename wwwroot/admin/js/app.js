@@ -56,6 +56,8 @@ app.controller("main", [ '$scope','remote','$location' ,function($scope,remote,$
 
     //目录
     $scope.openClose=function(index){
+        //$scope.isopen=!$scope.isopen;
+        //alert($scope.items[index].selected)
         //如果没有子菜单
         if($scope.items[index].childs.length<1){
             $scope.items[$scope.selectedindex].selected=false;
@@ -149,14 +151,12 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
     });
 
 
-    $scope.fullScreen={id:"",isFull:false,title:"全屏"}
+    $scope.fullScreen={id:"",isFull:false,title:"全屏",height:''}
     $scope.user = {
         id: 1,
         name: 'awesome userffffffffffffffffffffff'
     };
-    $scope.loaded=function(){
-        $scope.loading.value=false;
-    }
+
     $scope.updateUser=function(data){
         alert(data);
         //$scope.loading.value=false;
@@ -164,9 +164,9 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
     //缩放配置屏
     $scope.zoomScreen=function(){
         if($scope.fullScreen.isFull){
-            $scope.fullScreen={id:"",isFull:false,title:"全屏"}
+            $scope.fullScreen={id:"",isFull:false,title:"全屏",height:''}
         }else {
-            $scope.fullScreen={id:"jarviswidget-fullscreen-mode",isFull:true,title:"恢复正常大小"}
+            $scope.fullScreen={id:"jarviswidget-fullscreen-mode",isFull:true,title:"恢复正常大小",height:'height: '+window.screen.height+'px;'}
         }
     }
 

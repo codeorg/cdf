@@ -1,6 +1,6 @@
 
     <!-- widget grid -->
-    <section ng-init="loaded()" id="widget-grid" class="">
+    <section ng-init="loading.value=false" id="widget-grid" class="">
 
         <!-- row -->
         <div class="row">
@@ -23,7 +23,7 @@
                         <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
 
                     <!-- widget div-->
-                    <div role="content">
+                    <div role="content" style="{{fullScreen.height}}">
 
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
@@ -51,7 +51,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-10" collapse="config.webstatus">
+                                    <div class="col-sm-10" style="padding-left:10px" collapse="config.webstatus">
                                         <a href="javascript:void(0)" style="font-style:normal;margin-left:10px" onbeforesave="updateConfig('mendnotice',$data)" editable-textarea="config.mendnotice" e-rows="7" e-cols="40">
                                             {{config.mendnotice || '本站正在维护请稍候……' }}
                                         </a>
@@ -64,7 +64,7 @@
                                 <tbody>
                                 <tr>
                                     <td style="width:30%;">网站域名</td>
-                                    <td style="width:70%"><a href="javascript:void(0)" onbeforesave="updateConfig('domain',$data)" editable-text="config.domain" class="editable editable-click"> {{ config.domain || 'empty' }}</a></td>
+                                    <td style="width:70%"><a href="javascript:void(0)" onbeforesave="updateConfig('domain',$data)" editable-text="config.domain" e-style="width:200px" class="editable editable-click"> {{ config.domain || 'empty' }}</a></td>
                                 </tr>
                                 <tr>
                                     <td>网站名字</td>
