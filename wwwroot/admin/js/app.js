@@ -19,7 +19,8 @@ app.run(function(editableOptions) {
 };
  */
 app.factory( 'remote', [ '$resource', function( $resource ) {
-    return $resource( '/admin/:module/:id', {module:'@module',id:'@id'} ,{
+    //多个参数 param1&param1&param1
+    return $resource( '/admin/:module?:params', {module:'@module',params:'@params'} ,{
         'update':{method:'PUT'},
         'insert':{method:'POST'}
     });
@@ -143,7 +144,7 @@ app.controller('loginCtrl', function($scope, $routeParams) {
  * config，配置管理页面
  */
 app.controller('config', [ '$scope','remote',function($scope,remote) {
-    remote.get({module:'config',id:'web'},function(data){
+    remote.get({module:'config',params:'web'},function(data){
         $scope.config=data;
     });
     $scope.fullScreen={id:"",isFull:false,title:"全屏",height:''}
@@ -172,7 +173,7 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
 
         var obj={};
         obj[key]=val;
-        remote.update({module:'config',id:'web'},obj,function(data){
+        remote.update({module:'config',params:'web'},obj,function(data){
             $scope.msg=data;
         });
     }
@@ -180,10 +181,12 @@ app.controller('config', [ '$scope','remote',function($scope,remote) {
 }]);
 
 /**
- * category，配置管理页面
+ * category，分类管理页面
  */
 app.controller('category', [ '$scope','remote','$routeParams',function($scope,remote,$routeParams){
-    $scope.my_data =[ {
+    $scope.my_tree = tree = {};
+    $scope.my_data=[];
+ /*   $scope.my_data =[ {
         module: 'news',
         name: 'kakall',
         parent: '0',
@@ -195,28 +198,53 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
             name: 'dsfsfs',
             parent: '0',
             id: 'a2',
-            sort: '1' } ];
-    remote.query({module:'config',id:'category'},function(data){
+            sort: '1' ,haschild:true} ];*/
+    $scope.getChilds=function(row){
+        //当前branch有child并且为+号合并着的
+        if(row.branch.haschild && !row.branch.expanded){
+            row.tree_icon="fa fa-spinner fa-spin";
+            //admin/category/area/11
+            remote.query({module:'category',params:row.branch.module+"&"+row.branch.id},function(data){
+                row.branch.expanded=tree;//展开-
+                row.branch.children=data;
+            })
+        }
+        //row.branch.expanded = !row.branch.expanded
+    }
+
+    remote.query({module:'config',params:'category'},function(data){
         if(!data||data.length==0)return;
         $scope.categorys=data;
 
         if(!$routeParams.id)
-            $scope.selectedValue=$scope.categorys[0].value;
+            $scope.selectedId=$scope.categorys[0].id;
         else
-            $scope.selectedValue=$routeParams.id;
-        getCategoryByMoudleId($scope.selectedValue);
+            $scope.selectedId=$routeParams.id;
+        getCategoryByMoudleId($scope.selectedId);
     });
 
     $scope.categoryClick=function(c){
-        $scope.selectedValue= c.value;
-        getCategoryByMoudleId($scope.selectedValue);
+        $scope.selectedId= c.id;
+        getCategoryByMoudleId($scope.selectedId);
     }
     function getCategoryByMoudleId(val){
-        remote.query({module:'category',id:val},function(data){
-           // $scope.my_data = data;
-            //alert(data)
-        })
+        remote.query({module:'category',params:val+"&0"},function(data){
+            $scope.my_data = data;
+            if(data!=null&&data.length>0) tree.select_branch($scope.my_data[0]);
+        });
     }
+
+    return $scope.try_adding_a_branch = function() {
+        var b;
+        b = tree.get_selected_branch();
+        return tree.add_branch(b, {
+            name: 'New Branch',
+            data: {
+                something: 42,
+                "else": 43
+            }
+        });
+    };
 
 
 

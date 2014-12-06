@@ -19,10 +19,12 @@ exports.updateWeb = function (req, res) {
 /**
  * 分类一级分类
  */
-exports.getFirst = function (req, res) {
-    db.category.find({moudle:req.params.id},function(err,docs){
+exports.getCategoryByParentid = function (req, res) {
+
+    db.category.find({moudle:req.params.moudle,parentid:req.params.id || "0"},function(err,docs){
         if(err)res.end({err:false});
         res.writeHead(200, {"Content-Type": "application/json"});
+        console.log('---------------')
         console.log(docs)
         res.end(JSON.stringify(docs));
     })

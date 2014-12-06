@@ -133,13 +133,13 @@
         <div ng-init="loading.value=false">
 <div class="col-sm-3">
     <div class="list-group">
-        <a href="javascript:void(0)" ng-click="categoryClick(item)" ng-repeat="item in categorys" ng-class="{active:selectedValue==item.value}" class="list-group-item">{{item.name}}</a>
+        <a href="javascript:void(0)" ng-click="categoryClick(item)" ng-repeat="item in categorys" ng-class="{active:selectedId==item.id}" class="list-group-item">{{item.name}}</a>
     </div>
 </div>
 <div class="col-sm-3">
     <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
         <span ng-if="doing_async">...loading...</span>
-        <abn-tree tree-data="my_data"  tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="1" init-selected-value="111"></abn-tree>
+        <abn-tree tree-data="my_data"  tree-control="my_tree" on-select="my_tree_handler(branch)" co-childs="getChilds(row)" expand-level="1" ></abn-tree>
     </div>
 </div>
 

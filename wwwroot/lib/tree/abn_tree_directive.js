@@ -8,13 +8,13 @@
     '$timeout', function($timeout) {
       return {
         restrict: 'E',
-        template: "<ul class=\"nav nav-list nav-pills nav-stacked abn-tree\">\n  <li ng-repeat=\"row in tree_rows | filter:{visible:true} track by row.branch.uid\" ng-animate=\"'abn-tree-animate'\" ng-class=\"'level-' + {{ row.level }} + (row.branch.selected ? ' active':'') + ' ' +row.classes.join(' ')\" class=\"abn-tree-row\"><a ng-click=\"user_clicks_branch(row.branch)\" class=\"editable-{{ row.level }}\"><i ng-class=\"row.tree_icon\" ng-click=\"row.branch.expanded = !row.branch.expanded\" class=\"indented tree-icon\"> </i><span editable-text=\"row.name\" class=\"indented tree-label editable editable-click\" ng-class=\"{activespan:row.branch.selected}\">{{ row.name }}</span></a></li>\n</ul>",
+        template: "<ul class=\"nav nav-list nav-pills nav-stacked abn-tree\">\n  <li ng-repeat=\"row in tree_rows | filter:{visible:true} track by row.branch.uid\" ng-animate=\"'abn-tree-animate'\" ng-class=\"'level-' + {{ row.level }} + (row.branch.selected ? ' active':'') + ' ' +row.classes.join(' ')\" class=\"abn-tree-row\"><a ng-click=\"user_clicks_branch(row.branch)\" class=\"editable-{{ row.level }}\"><i ng-class=\"row.tree_icon\" ng-click=\"getChilds(row)\" class=\"indented tree-icon\"> </i><span editable-text=\"row.name\" class=\"indented tree-label editable editable-click\" ng-class=\"{activespan:row.branch.selected}\">{{ row.name }}</span></a></li>\n</ul>",
         replace: true,
         scope: {
           treeData: '=',
           onSelect: '&',
-          initialSelection: '@',
-          initSelectedValue:'@',
+          initSelectedId:'@',
+          coChilds:'&',
           treeControl: '='
         },
         link: function(scope, element, attrs) {
@@ -33,9 +33,15 @@
           if (attrs.iconLeaf == null) {
             attrs.iconLeaf = 'icon-file  glyphicon glyphicon-file  fa fa-file';
           }
+          if(attrs.iconLoading == null){
+            attrs.iconLoading = 'fa-li fa fa-spinner fa-spin';
+          }
+
           if (attrs.expandLevel == null) {
             attrs.expandLevel = '3';
           }
+
+
           expand_level = parseInt(attrs.expandLevel, 10);
           if (!scope.treeData) {
             alert('no treeData defined for the tree!');
@@ -88,6 +94,7 @@
               branch.selected = true;
               selected_branch = branch;
               expand_all_parents(branch);
+
               if (branch.onSelect != null) {
                 return $timeout(function() {
                   return branch.onSelect(branch);
@@ -101,9 +108,26 @@
                   });
                 }
               }
+
+/*              if (branch.coChilds != null) {
+                return $timeout(function() {
+                  return branch.coChilds(branch);
+                });
+              } else {
+                if (scope.coChilds != null) {
+                  return $timeout(function() {
+                    return scope.coChilds({
+                      branch: branch
+                    });
+                  });
+                }
+              }*/
+
+
             }
           };
           scope.user_clicks_branch = function(branch) {
+
             if (branch !== selected_branch) {
               return select_branch(branch);
             }
@@ -192,22 +216,47 @@
               if (branch.classes == null) {
                 branch.classes = [];
               }
-              if (!branch.noLeaf && (!branch.children || branch.children.length === 0)) {
-                tree_icon = attrs.iconLeaf;
-                if (__indexOf.call(branch.classes, "leaf") < 0) {
-                  branch.classes.push("leaf");
-                }
-              } else {
+              if(branch.haschild){
+                //有分类
+                //是否展开
                 if (branch.expanded) {
                   tree_icon = attrs.iconCollapse;
                 } else {
                   tree_icon = attrs.iconExpand;
                 }
+              }else{
+                //没有分类
+                tree_icon = attrs.iconLeaf;
+                if (__indexOf.call(branch.classes, "leaf") < 0) {
+                  branch.classes.push("leaf");
+                }
               }
+
+/*              if (!branch.noLeaf && (!branch.children || branch.children.length === 0)) {
+                //没有分类
+                tree_icon = attrs.iconLeaf;
+                if (__indexOf.call(branch.classes, "leaf") < 0) {
+                  branch.classes.push("leaf");
+                }
+              } else {
+                tree_icon = attrs.iconLeaf;
+                *//*
+                if (branch.expanded) {
+                  tree_icon = attrs.iconCollapse;
+                } else {
+                  tree_icon = attrs.iconExpand;
+                }*//*
+              }*/
+              scope.getChilds=function(row){
+                scope.coChilds({"row":row});
+
+              };
+
               scope.tree_rows.push({
                 level: level,
                 branch: branch,
                 name: branch.name,
+                id: branch.id,
                 classes: branch.classes,
                 tree_icon: tree_icon,
                 visible: visible
@@ -232,18 +281,18 @@
             return _results;
           };
           scope.$watch('treeData', on_treeData_change, true);
-          if (attrs.initSelectedValue != null) {
+          if (attrs.initSelectedId != null) {
             for_each_branch(function(b) {
-              if (b.value === attrs.initSelectedValue) {
+              if (b.id === attrs.initSelectedId) {
                 return $timeout(function() {
                   return select_branch(b);
                 });
               }
             });
           }
-          if (attrs.initialSelection != null) {
+          if (attrs.initSelectedId != null) {
             for_each_branch(function(b) {
-              if (b.name === attrs.initialSelection) {
+              if (b.id === attrs.initSelectedId) {
                 return $timeout(function() {
                   return select_branch(b);
                 });
