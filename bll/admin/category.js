@@ -21,7 +21,7 @@ exports.updateWeb = function (req, res) {
  */
 exports.getCategoryByParentid = function (req, res) {
 
-    db.category.find({module:req.params.module,parentid:req.params.id || "0"},function(err,docs){
+    db.category.find({module:req.params.module,parentid:req.params.id || "0"},{sort:{sort:1}},function(err,docs){
         if(err)res.end({err:false});
         res.writeHead(200, {"Content-Type": "application/json"});
         console.log('---------------')
@@ -29,6 +29,17 @@ exports.getCategoryByParentid = function (req, res) {
         res.end(JSON.stringify(docs));
     })
 };
+
+var updateParent=function(doc){
+    if(req.body.parentid=="0"){
+        console.log(doc)
+        res.end(JSON.stringify(doc));
+    }
+    db.category.update({id:req.body.parentid},{$set:{haschild:true}},function(err,_doc){
+        if(err)res.end({err:true,msg:err});
+        console.log(doc)
+    });
+}
 
 exports.insert = function (req, res) {
     //sort:{sort:-1}

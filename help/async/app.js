@@ -1,22 +1,17 @@
 var express = require('express');
 var session = require('express-session');
 var cookie=require('cookie-parser');
-require('./common/stringX')
+
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require('fs');
 var favicon = require('serve-favicon');
-require('./common/extend');
-var base64=require('./wwwroot/public/base64');
+
 var url = require('url');
 var hbs = require('hbs');
 //var $ = require('jquery');
 var path = require("path");
-var fv= require("./common/formValidate");
-var fr= require("./common/formRule");
-var sys= require("./router/sys");
-var user= require("./router/user");
-var admin= require("./router/admin");
+
 
 
 app.use(bodyParser.json());
@@ -81,11 +76,11 @@ app.get('/jq:id', function(req, res) {
 
 //---------------------- mongoskin ------------------------//
 /*var db = require('mongoskin').db('mongodb://localhost:27017/codeorg');
-db.collection('table').find({adminMenu:"aa"}).toArray(function(err, result) {
-    if (err) throw err;
-    console.log(result);
+ db.collection('table').find({adminMenu:"aa"}).toArray(function(err, result) {
+ if (err) throw err;
+ console.log(result);
 
-});*/
+ });*/
 
 var mongojs = require('mongojs');
 var db = mongojs('localhost:27017/codeorg',['table','user']);
@@ -121,11 +116,11 @@ app.get('/mg/:id', function(req, res) {
         })
         res.end();
 
-    /*   for(d in docs){
-           console.log(docs[d]);
-       }
-*/
-       // res.end(docs)
+        /*   for(d in docs){
+         console.log(docs[d]);
+         }
+         */
+        // res.end(docs)
         //res.end(docs);
         // docs is an array of all the documents in mycollection
     });
@@ -164,7 +159,7 @@ app.all('/codeview*', function(req, res) {
 
 
 app.all('/recipes/:id', function(req, res) {
-   // res.writeHead(200, {"Content-Type": "application/json"});
+    // res.writeHead(200, {"Content-Type": "application/json"});
     res.writeHead(200, {"Content-Type": "application/json"});
     var obj=req.body;
     fr.fileToRoles("test2.html",function(rule){
@@ -173,25 +168,14 @@ app.all('/recipes/:id', function(req, res) {
     });
 
 });
-var async = require('async');
-var t = require('./help/async/t');
-var log = t.log;
+
+var extend=function(o,n,override){
+    for(var p in n)if(n.hasOwnProperty(p) && (!o.hasOwnProperty(p) || override))o[p]=n[p];
+};
 
 
 
-app.get('/async', function(req, res) {
-// 1.2
-    async.series([
-        function(cb) { t.inc(3, cb); },
-        function(cb) { t.err('test_err', cb); },
-        function(cb) { t.inc(8, cb); }
-    ], function (err, results) {
-        res.end(err);
-        log('1.2 err: ', err);
-        log('1.2 results: ', results);
-    });
 
-})
 
 
 //console.log(req.method);

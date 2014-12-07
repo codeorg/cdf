@@ -251,6 +251,7 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
         }else{
             obj.parentid= b.id;
             obj.module= b.module;
+            obj.parentobjectid= b._id;
          }
          obj.name='新分类';
          obj.haschild=false;
