@@ -18,7 +18,7 @@
           treeControl: '='
         },
         link: function(scope, element, attrs) {
-          var error, expand_all_parents, expand_level, for_all_ancestors, for_each_branch, get_parent, n, on_treeData_change, select_branch, selected_branch, tree;
+          var error, expand_all_parents, expand_level, for_all_ancestors, for_each_branch, get_parent, n, on_treeData_change, select_branch,unselect, selected_branch, tree;
           error = function(s) {
             console.log('ERROR:' + s);
             debugger;
@@ -79,6 +79,9 @@
             return _results;
           };
           selected_branch = null;
+
+
+
           select_branch = function(branch) {
             if (!branch) {
               if (selected_branch != null) {
@@ -126,11 +129,14 @@
 
             }
           };
+
+
           scope.user_clicks_branch = function(branch) {
 
             if (branch !== selected_branch) {
               return select_branch(branch);
             }
+            tree.unselect();
           };
           get_parent = function(child) {
             var parent;
@@ -328,7 +334,12 @@
               };
 
 
-
+              tree.unselect = function() {
+                if (selected_branch != null) {
+                  selected_branch.selected = false;
+                }
+                selected_branch = null;
+              };
 
               tree.select_first_branch = function() {
                 var b;
@@ -362,6 +373,10 @@
                 }
               };
               tree.add_branch = function(parent, new_branch) {
+             /*   if(scope.treeData.length==0){
+                  scope.treeData.push(new_branch);
+                  return;
+                }*/
                 if (parent != null) {
                   parent.children.push(new_branch);
                   parent.expanded = true;
@@ -370,6 +385,25 @@
                 }
                 return new_branch;
               };
+
+              tree.add_childs = function(parent, childs) {
+                //parent.push(childs[0]);return
+                var p;
+                if (parent != null) {
+                  p = parent.children;
+                } else {
+                  p = scope.treeData;
+                }
+
+                if (p.length == 0) {
+                  childs.forEach(function (c) {
+                    p.push(c);
+                  })
+                }
+                //parent.expanded = true;
+                return childs;
+              };
+
               tree.add_root_branch = function(new_branch) {
                 tree.add_branch(null, new_branch);
                 return new_branch;

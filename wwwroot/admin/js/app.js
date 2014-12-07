@@ -20,7 +20,7 @@ app.run(function(editableOptions) {
  */
 app.factory( 'remote', [ '$resource', function( $resource ) {
     //多个参数 param1&param1&param1
-    return $resource( '/admin/:module?:params', {module:'@module',params:'@params'} ,{
+    return $resource( '/admin/:module/:params', {module:'@module',params:'@params'} ,{
         'update':{method:'PUT'},
         'insert':{method:'POST'}
     });
@@ -113,9 +113,9 @@ app.controller("main", [ '$scope','remote','$location' ,function($scope,remote,$
  */
 app.config(['$routeProvider', function($routeProvider) {
     var formartTpl=function(name){ return '/template/admin/'+name+'.html'}
-    var moudles=['main','config','category'];
-    moudles.forEach(function(moudle){
-        $routeProvider.when('/'+moudle,{ templateUrl:formartTpl(moudle), controller:moudle});
+    var modules=['main','config','category'];
+    modules.forEach(function(module){
+        $routeProvider.when('/'+module,{ templateUrl:formartTpl(module), controller:module});
     });
     $routeProvider.when('/category/:id',{ templateUrl:formartTpl('category'), controller:'category'});
     $routeProvider .otherwise({ redirectTo: '/main' });
@@ -201,12 +201,17 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
             sort: '1' ,haschild:true} ];*/
     $scope.getChilds=function(row){
         //当前branch有child并且为+号合并着的
+        if(row.branch.expanded){
+            row.branch.expanded=false;
+            return;
+        }
         if(row.branch.haschild && !row.branch.expanded){
             row.tree_icon="fa fa-spinner fa-spin";
             //admin/category/area/11
             remote.query({module:'category',params:row.branch.module+"&"+row.branch.id},function(data){
-                row.branch.expanded=tree;//展开-
-                row.branch.children=data;
+
+                tree.add_childs(row.branch, data);//添加子菜单
+                row.branch.expanded=true;//展开-
             })
         }
         //row.branch.expanded = !row.branch.expanded
@@ -220,30 +225,48 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
             $scope.selectedId=$scope.categorys[0].id;
         else
             $scope.selectedId=$routeParams.id;
-        getCategoryByMoudleId($scope.selectedId);
+        getCategoryByModuleId($scope.selectedId);
     });
 
     $scope.categoryClick=function(c){
         $scope.selectedId= c.id;
-        getCategoryByMoudleId($scope.selectedId);
+        getCategoryByModuleId($scope.selectedId);
     }
-    function getCategoryByMoudleId(val){
+    function getCategoryByModuleId(val){
         remote.query({module:'category',params:val+"&0"},function(data){
             $scope.my_data = data;
-            if(data!=null&&data.length>0) tree.select_branch($scope.my_data[0]);
+            tree.unselect();
+            //if(data!=null&&data.length>0) tree.select_branch($scope.my_data[0]);
         });
     }
 
-    return $scope.try_adding_a_branch = function() {
-        var b;
+     $scope.try_adding_a_branch = function() {
+        //tree.unselect();return;
+        var b; obj={};
         b = tree.get_selected_branch();
-        return tree.add_branch(b, {
-            name: 'New Branch',
-            data: {
-                something: 42,
-                "else": 43
-            }
-        });
+        if(b==null){
+            obj.parentid="0";
+            obj.module=$scope.selectedId;
+
+        }else{
+            obj.parentid= b.id;
+            obj.module= b.module;
+         }
+         obj.name='新分类';
+         obj.haschild=false;
+         //alert(parseInt("a",16))
+         //tree.add_branch(b,obj);
+         remote.insert({module:'category'},obj,function(data){
+             tree.add_branch(b,data);
+
+             //$scope.my_data = data;
+             //tree.unselect();
+             //if(data!=null&&data.length>0) tree.select_branch($scope.my_data[0]);
+         });
+
+
+         if(b)b.haschild=true;
+
     };
 
 

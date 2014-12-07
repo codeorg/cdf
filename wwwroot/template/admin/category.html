@@ -124,26 +124,33 @@
     .sellss form{position:absolute;left: 40px;}
     .aaa{clear:both;padding: 0;margin: 0; float: left;line-height: 0;position: relative;border: 1px solid #000;}
 
-    .editable-1 form{position:absolute;left: 30px;top:-3px;z-index:9999;}
-    .editable-2 form{position:absolute;left: 50px;top:-3px;z-index:9999;}
-    .editable-3 form{position:absolute;left: 70px;top:-3px;z-index:9999;}
+    .editable-1 form{position:absolute;left: 30px;top:-3px;z-index:999;}
+    .editable-2 form{position:absolute;left: 50px;top:-3px;z-index:999;}
+    .editable-3 form{position:absolute;left: 70px;top:-3px;z-index:999;}
+    .editable-4 form{position:absolute;left: 90px;top:-3px;z-index:999;}
+    .editable-5 form{position:absolute;left: 110px;top:-3px;z-index:999;}
+    .editable-6 form{position:absolute;left: 130px;top:-3px;z-index:999;}
+    .editable-7 form{position:absolute;left: 150px;top:-3px;z-index:999;}
+    .editable-8 form{position:absolute;left: 170px;top:-3px;z-index:999;}
+    .editable-9 form{position:absolute;left: 190px;top:-3px;z-index:999;}
+    .editable-10 form{position:absolute;left: 210px;top:-3px;z-index:999;}
     .active .activespan{color:#ffffff;}
     .marg{margin-top: 10px}
 </style>
         <div ng-init="loading.value=false">
-<div class="col-sm-3">
+<div class="col-sm-2">
     <div class="list-group">
         <a href="javascript:void(0)" ng-click="categoryClick(item)" ng-repeat="item in categorys" ng-class="{active:selectedId==item.id}" class="list-group-item">{{item.name}}</a>
     </div>
 </div>
-<div class="col-sm-3">
+<div class="col-sm-4">
     <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
         <span ng-if="doing_async">...loading...</span>
         <abn-tree tree-data="my_data"  tree-control="my_tree" on-select="my_tree_handler(branch)" co-childs="getChilds(row)" expand-level="1" ></abn-tree>
     </div>
 </div>
 
-<div class="col-sm-5">
+<div class="col-sm-4">
     <button ng-click="try_adding_a_branch()" class="btn btn-primary btn-large fa fa-plus"> 添加分类</button><br>
     <button ng-click="my_tree.moveup()" class="btn btn-primary btn-large fa fa-arrow-up marg"> 向上移动</button><br>
     <button ng-click="my_tree.movedown()" class="btn btn-primary btn-large fa fa-arrow-down marg"> 向下移动</button><br>

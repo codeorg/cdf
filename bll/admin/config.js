@@ -30,7 +30,7 @@ exports.updateWeb = function (req, res) {
  * 得到分类配置
  */
 exports.getCategory = function (req, res) {
-    db.config.find({moudle:"category"},function(err,docs){
+    db.config.find({module:"category"},function(err,docs){
         if(err)res.end({err:false});
         res.writeHead(200, {"Content-Type": "application/json"});
         console.log(docs)
