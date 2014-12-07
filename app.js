@@ -178,17 +178,35 @@ var t = require('./help/async/t');
 var log = t.log;
 
 
-
+aa=function (callback) {
+    setTimeout(function(){
+        aaa="getData1"
+        console.log('1.1: got data');
+        callback(null, 'mydata111111111111');
+    }, 300);
+}
 app.get('/async', function(req, res) {
-// 1.2
-    async.series([
-        function(cb) { t.inc(3, cb); },
-        function(cb) { t.err('test_err', cb); },
-        function(cb) { t.inc(8, cb); }
-    ], function (err, results) {
-        res.end(err);
-        log('1.2 err: ', err);
-        log('1.2 results: ', results);
+    async.auto({
+        getData: aa,
+        makeFolder: function (callback) {
+            setTimeout(function(){
+                console.log('1.1: made folder');
+                callback(null, 'myfolder');
+            }, 200);
+        },
+        writeFile: ['getData', 'makeFolder', function(callback,re) {
+            setTimeout(function(){
+                console.log('1.1: wrote file'+ re.makeFolder);
+                callback(null, 'myfile');
+            }, 300);
+        }],
+        emailFiles: ['writeFile', function(callback, results) {
+            log('1.1: emailed file: ', results.writeFile);
+            callback(null, results.writeFile);
+        }]
+    }, function(err, results) {
+        log('1.1: err: ', err);
+        log('1.1: results: ', results);
     });
 
 })

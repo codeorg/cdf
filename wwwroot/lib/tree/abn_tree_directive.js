@@ -34,7 +34,7 @@
             attrs.iconLeaf = 'icon-file  glyphicon glyphicon-file  fa fa-file';
           }
           if(attrs.iconLoading == null){
-            attrs.iconLoading = 'fa-li fa fa-spinner fa-spin';
+            attrs.iconLoading = 'fa fa-spinner fa-spin';
           }
 
           if (attrs.expandLevel == null) {
@@ -222,22 +222,25 @@
               if (branch.classes == null) {
                 branch.classes = [];
               }
-              if(branch.haschild){
-                //有分类
-                //是否展开
-                if (branch.expanded) {
-                  tree_icon = attrs.iconCollapse;
+              if(branch.loading){
+                tree_icon = attrs.iconLoading;
+              }else {
+                if (branch.haschild) {
+                  //有分类
+                  //是否展开
+                  if (branch.expanded) {
+                    tree_icon = attrs.iconCollapse;
+                  } else {
+                    tree_icon = attrs.iconExpand;
+                  }
                 } else {
-                  tree_icon = attrs.iconExpand;
-                }
-              }else{
-                //没有分类
-                tree_icon = attrs.iconLeaf;
-                if (__indexOf.call(branch.classes, "leaf") < 0) {
-                  branch.classes.push("leaf");
+                  //没有分类
+                  tree_icon = attrs.iconLeaf;
+                  if (__indexOf.call(branch.classes, "leaf") < 0) {
+                    branch.classes.push("leaf");
+                  }
                 }
               }
-
 /*              if (!branch.noLeaf && (!branch.children || branch.children.length === 0)) {
                 //没有分类
                 tree_icon = attrs.iconLeaf;
@@ -254,6 +257,8 @@
                 }*//*
               }*/
               scope.getChilds=function(row){
+                //alert(row.tree_icon)
+                row.tree_icon="fa-li fa fa-spinner fa-spin";
                 scope.coChilds({"row":row});
 
               };

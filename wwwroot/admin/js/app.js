@@ -200,17 +200,27 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
             id: 'a2',
             sort: '1' ,haschild:true} ];*/
     $scope.getChilds=function(row){
-        //当前branch有child并且为+号合并着的
+        //当前为－号
         if(row.branch.expanded){
             row.branch.expanded=false;
             return;
         }
+        //当前为－号
+        if(!row.branch.expanded&&row.branch.children!=null&&row.branch.children.length>0){
+            row.branch.expanded=true;
+            return;
+        }
+        //当前branch有child并且为+号合并着的
         if(row.branch.haschild && !row.branch.expanded){
-            row.tree_icon="fa fa-spinner fa-spin";
+            //row.tree_icon="fa-li fa fa-spinner fa-spin";
+            row.branch.loading=true
+            //tree_icon
+            //row.branch.expanded=true;
             //admin/category/area/11
             remote.query({module:'category',params:row.branch.module+"&"+row.branch.id},function(data){
 
                 tree.add_childs(row.branch, data);//添加子菜单
+                row.branch.loading=false;
                 row.branch.expanded=true;//展开-
             })
         }
@@ -251,15 +261,17 @@ app.controller('category', [ '$scope','remote','$routeParams',function($scope,re
         }else{
             obj.parentid= b.id;
             obj.module= b.module;
-            obj.parentobjectid= b._id;
+            //obj.parentobjectid= b._id;
          }
          obj.name='新分类';
          obj.haschild=false;
          //alert(parseInt("a",16))
          //tree.add_branch(b,obj);
          remote.insert({module:'category'},obj,function(data){
-             tree.add_branch(b,data);
-
+             //tree.add_branch(b,data);
+             tree.add_branch(b, data);//添加子菜单
+             b.expanded=true;
+             //row.branch.expanded=true;//展开-
              //$scope.my_data = data;
              //tree.unselect();
              //if(data!=null&&data.length>0) tree.select_branch($scope.my_data[0]);

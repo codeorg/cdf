@@ -23,7 +23,7 @@ exports.err = function(errMsg, callback, timeout) {
   //模拟一个错误的产生，让async各个函数末尾的callback接收到。
     timeout = timeout || 200;
     setTimeout(function() {
-        callback(errMsg);
+        callback(errMsg,"dddd");
     }, timeout);
 };
 
