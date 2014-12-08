@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html data-ng-app="demo">
+<head>
+  <title>AngularJS ng-ScrollSpy.js</title>
+
+  <script type="text/javascript" src="/lib/ng/angular.min.js"></script>
+  <script type="text/javascript" src="demo/scripts/demo.js"></script>
+  <script type="text/javascript" src="src/ng-ScrollSpy.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="demo/styles/main.css"/>
+
+</head>
+<body>
+
+<header id="top">
+  <a href="https://github.com/patrickmarabeas/ng-ScrollSpy.js">View it on GitHub</a>
+  <a href="https://github.com/patrickmarabeas/ng-ScrollSpy.js/zipball/master">Download ZIP</a>
+  <a href="https://github.com/patrickmarabeas/ng-ScrollSpy.js/tarball/master">Download TAR</a>
+  <a href="https://github.com/patrickmarabeas">@patrickmarabeas</a>
+</header>
+
+<nav>
+  <span class="item" data-scrollspy-listen="code">ng-ScrollSpy.js</span>
+  <span class="item" data-scrollspy-listen="hongkong">Hong Kong</span>
+  <span class="item" data-scrollspy-listen="newyork">New York</span>
+  <span class="item" data-scrollspy-listen="london">London</span>
+  <span class="item" data-scrollspy-listen="sydney">Sydney</span>
+</nav>
+
+<section id="code" data-scrollspy-broadcast>
+
+
+
+</section>
+<section id="hongkong" data-scrollspy-broadcast data-expand>aaaaaaaaaaaaaaaa</section>
+<section id="newyork" data-scrollspy-broadcast data-expand></section>
+<section id="london" data-scrollspy-broadcast data-expand></section>
+<section id="sydney" data-scrollspy-broadcast data-expand></section>
+
+</body>
+</html>

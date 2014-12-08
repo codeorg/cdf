@@ -134,13 +134,20 @@
     .editable-8 form{position:absolute;left: 170px;top:-3px;z-index:999;}
     .editable-9 form{position:absolute;left: 190px;top:-3px;z-index:999;}
     .editable-10 form{position:absolute;left: 210px;top:-3px;z-index:999;}
+    #categoryModule.active  { position: fixed;width: 200px;top:10px;width: 250px}
+    #categoryOp.active { position: fixed;width: 200px;top:10px}
     .active .activespan{color:#ffffff;}
     .marg{margin-top: 10px}
 </style>
-        <div ng-init="loading.value=false">
-<div class="col-sm-2">
-    <div class="list-group">
+
+<div ng-init="loading.value=false" style="height:2000px ">
+
+
+<div  class="col-sm-2" >
+    <div id="categoryModule" data-scrollspy-listen="categoryLeft22" style="width: 250px">
+    <div id="categoryLeft22" data-scrollspy-broadcast class="list-group">
         <a href="javascript:void(0)" ng-click="categoryClick(item)" ng-repeat="item in categorys" ng-class="{active:selectedId==item.id}" class="list-group-item">{{item.name}}</a>
+    </div>
     </div>
 </div>
 <div class="col-sm-4">
@@ -151,10 +158,14 @@
 </div>
 
 <div class="col-sm-4">
-    <button ng-click="try_adding_a_branch()" class="btn btn-primary btn-large fa fa-plus"> 添加分类</button><br>
-    <button ng-click="my_tree.moveup()" class="btn btn-primary btn-large fa fa-arrow-up marg"> 向上移动</button><br>
+    <div id="categoryOp" data-scrollspy-listen="categoryLeft22">
+    <div class="list-group">
+    <button ng-click="my_tree.moveup()" class="btn btn-primary btn-large fa fa-arrow-up"> 向上移动</button><br>
     <button ng-click="my_tree.movedown()" class="btn btn-primary btn-large fa fa-arrow-down marg"> 向下移动</button><br>
-
+    <button ng-click="try_adding_a_branch()" class="btn btn-primary btn-large fa fa-plus marg"> 添加分类</button><br>
+    <button ng-click="my_tree.movedown()" class="btn btn-primary btn-large fa fa-trash marg"> 删除分类</button><br>
+    </div>
+</div>
 </div>
 
         </div>

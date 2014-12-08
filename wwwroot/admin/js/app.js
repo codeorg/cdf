@@ -5,10 +5,21 @@
 /**
  * 模块定义
  */
-var  app =angular.module('app', ['ngRoute','ngResource','xeditable','ui.bootstrap','angularBootstrapNavTree']);
+var  app =angular.module('app', ['ngRoute','ngResource','xeditable','ui.bootstrap','angularBootstrapNavTree','ngScrollSpy']);
 app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
+
+app.config(['scrollspyConfigProvider', function(ScrollspyConfigProvider) {
+    ScrollspyConfigProvider.config = {
+        offset:-100,
+        throttle: function(e,t,n){var r,i;return function(){var s=n||this;var o=+(new Date),u=arguments;if(r&&o<r+t){clearTimeout(i);i=setTimeout(function(){r=o;e.apply(s,u)},t)}else{r=o;e.apply(s,u)}}},
+        delay: 100
+    };
+}]);
+
+
+
 /**
  * 远程Ajax请求，数组用query,get只能拿到单个对象
  * { 'get':    {method:'GET'},

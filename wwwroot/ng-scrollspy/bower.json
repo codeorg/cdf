@@ -1,0 +1,25 @@
+{
+	"name": "ng-ScrollSpy.js",
+	"version": "3.2.0",
+	"main": [
+		"ng-ScrollSpy.js"
+	],
+	"keywords": [
+		"angular",
+		"javascript",
+		"scrollspy"
+	],
+  "ignore": [
+    "demo",
+    "test",
+    ".bowerrc",
+    ".gitignore",
+    "bower.json",
+    "Gruntfile.js",
+    "index.html",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "1.2.16"
+  }
+}
